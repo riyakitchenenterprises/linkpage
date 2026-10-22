@@ -1,0 +1,10 @@
+{
+  "enabled": true,
+  "title": "Today's Homestyle Special",
+  "badge": "Daily Special",
+  "dishName": "Authentic Homestyle Thali",
+  "image": "/riya-kitchen-thali.jpg",
+  "imageAlt": "Freshly prepared Homestyle Thali by Riya Kitchen",
+  "description": "Slow-cooked Dal Tadka, Seasonal Mixed Veg, Crispy Bhindi Fry, Fragrant Basmati Rice, Soft Handmade Rotis, Fresh Dahi & Garden Salad.",
+  "note": "Cooked fresh every day in small, loving batches. No artificial preservatives."
+}

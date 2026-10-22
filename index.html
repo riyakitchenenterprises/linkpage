@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
+    <title>Riya Kitchen | Homemade Goodness, Every Day</title>
+    
+    <!-- SEO & Social Meta Tags -->
+    <meta name="description" content="Riya Kitchen — Homemade goodness, every day. Comforting food. Freshly prepared. Made with love. Order daily meals on WhatsApp and explore our homestyle menu." />
+    <meta name="theme-color" content="#FAF5ED" />
+    
+    <!-- Open Graph / Social Sharing -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Riya Kitchen | Homemade Goodness, Every Day" />
+    <meta property="og:description" content="Comforting food. Freshly prepared. Made with love. Connect with Riya Kitchen." />
+    <meta property="og:image" content="/riya-kitchen-thali.jpg" />
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/riya-kitchen-logo.png" />
+    <link rel="apple-touch-icon" href="/riya-kitchen-logo.png" />
+
+    <!-- Google Fonts Preconnect -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,600;0,9..144,700;1,9..144,600&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="/src/styles/main.css" />
+  </head>
+  <body>
+    <main class="app-container">
+      
+      <!-- Top Action Bar -->
+      <nav class="top-nav" aria-label="Quick Actions">
+        <button id="share-btn" class="icon-btn" aria-label="Share this link page" title="Share page">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="18" cy="5" r="3"></circle>
+            <circle cx="6" cy="12" r="3"></circle>
+            <circle cx="18" cy="19" r="3"></circle>
+            <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+            <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+          </svg>
+        </button>
+      </nav>
+
+      <!-- Food Banner Card -->
+      <div class="banner-wrapper">
+        <img 
+          src="/riya-kitchen-thali.jpg" 
+          alt="Authentic Homemade Food by Riya Kitchen" 
+          class="banner-food-img" 
+          loading="eager"
+        />
+        <div class="banner-overlay" aria-hidden="true"></div>
+      </div>
+
+      <!-- Brand Profile Header -->
+      <header class="profile-section">
+        <div class="logo-wrapper">
+          <div class="logo-halo" aria-hidden="true"></div>
+          <div class="logo-container">
+            <img 
+              src="/riya-kitchen-logo.png" 
+              alt="Riya Kitchen Logo" 
+              class="profile-logo"
+              width="136" 
+              height="136" 
+              loading="eager"
+            />
+          </div>
+          <div class="verified-badge" title="Verified Homemade Food" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="20 6 9 17 4 12"></polyline>
+            </svg>
+          </div>
+        </div>
+
+        <h1 class="brand-title">Riya Kitchen</h1>
+
+        <!-- Tagline & Supporting line -->
+        <p class="brand-tagline">Homemade goodness, every day.</p>
+        <p class="brand-supporting">Comforting food. Freshly prepared. Made with love.</p>
+      </header>
+
+      <!-- Ordered Action Buttons -->
+      <section class="links-list" id="links-list" aria-label="Official Links">
+        <!-- Rendered dynamically from src/data/links.json with fallback -->
+      </section>
+
+      <!-- Daily Food Specials Section -->
+      <div id="specials-container">
+        <!-- Rendered from src/data/specials.json -->
+      </div>
+
+      <!-- Kitchen & Ordering Information -->
+      <div id="kitchen-info-container">
+        <!-- Rendered from src/data/kitchenInfo.json -->
+      </div>
+
+      <!-- Footer Section -->
+      <footer class="footer">
+        <span class="footer-brand">Riya Kitchen</span>
+        <p class="footer-copy">
+          Made with <span class="footer-heart">❤️</span> for food lovers
+        </p>
+      </footer>
+    </main>
+
+    <!-- Interactive Copy Link Toast -->
+    <div id="toast" class="toast" role="status" aria-live="polite">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+        <path d="M20 6L9 17l-5-5"></path>
+      </svg>
+      <span class="toast-msg">Link copied to clipboard!</span>
+    </div>
+
+    <!-- Application Script -->
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>

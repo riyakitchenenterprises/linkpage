@@ -1,0 +1,24 @@
+{
+  "enabled": true,
+  "heading": "Ordering & Kitchen Info",
+  "details": [
+    {
+      "type": "hours",
+      "icon": "clock",
+      "title": "Ordering Hours",
+      "text": "Daily Pre-orders for Lunch & Dinner"
+    },
+    {
+      "type": "delivery",
+      "icon": "truck",
+      "title": "Delivery & Pickup",
+      "text": "Home Delivery & Pre-Order Pickup available"
+    },
+    {
+      "type": "area",
+      "icon": "map",
+      "title": "Service Area",
+      "text": "Delivering to nearby locations (confirm address on WhatsApp)"
+    }
+  ]
+}

@@ -1,0 +1,38 @@
+[
+  {
+    "id": "whatsapp",
+    "url": "https://wa.me/?text=Hello%20Riya%20Kitchen,%20I%20would%20like%20to%20order%20food",
+    "title": "Order on WhatsApp",
+    "subtitle": "Tap to order directly",
+    "platform": "whatsapp",
+    "isFeatured": true
+  },
+  {
+    "id": "menu",
+    "url": "#menu-section",
+    "title": "Explore Our Menu",
+    "subtitle": "View daily varieties & specials",
+    "platform": "menu"
+  },
+  {
+    "id": "instagram",
+    "url": "https://www.instagram.com/riyakitchenenterprises/",
+    "title": "Follow Our Kitchen on Instagram",
+    "subtitle": "@riyakitchenenterprises",
+    "platform": "instagram"
+  },
+  {
+    "id": "facebook",
+    "url": "https://www.facebook.com/riyakitchenenterprises/",
+    "title": "Find Us on Facebook",
+    "subtitle": "riyakitchenenterprises",
+    "platform": "facebook"
+  },
+  {
+    "id": "email",
+    "url": "mailto:riyakitchenenterprises@gmail.com",
+    "title": "Email Us Directly",
+    "subtitle": "riyakitchenenterprises@gmail.com",
+    "platform": "email"
+  }
+]
