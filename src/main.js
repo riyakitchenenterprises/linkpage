@@ -105,7 +105,7 @@ export function renderSpecials() {
         </p>
 
         <a 
-          href="https://wa.me/?text=Hello%20Riya%20Kitchen,%20I%20would%20like%20to%20order%20the%20${encodeURIComponent(specialsData.dishName)}" 
+          href="https://wa.me/?text=Hello%20Riya%E2%80%99s%20Kitchen,%20I%20would%20like%20to%20order%20the%20${encodeURIComponent(specialsData.dishName)}" 
           class="order-special-btn"
           target="_blank"
           rel="noopener noreferrer"
@@ -174,8 +174,8 @@ function setupShare() {
 
   shareBtn.addEventListener('click', async () => {
     const shareData = {
-      title: "Riya Kitchen | Homemade Goodness, Every Day",
-      text: "Explore Riya Kitchen - Comforting food. Freshly prepared. Made with love.",
+      title: "Riya’s Kitchen | Homemade Goodness, Every Day",
+      text: "Explore Riya’s Kitchen - Comforting food. Freshly prepared. Made with love.",
       url: window.location.href
     };
 

@@ -1,7 +1,7 @@
 [
   {
     "id": "whatsapp",
-    "url": "https://wa.me/?text=Hello%20Riya%20Kitchen,%20I%20would%20like%20to%20order%20food",
+    "url": "https://wa.me/?text=Hello%20Riya%E2%80%99s%20Kitchen,%20I%20would%20like%20to%20order%20food",
     "title": "Order on WhatsApp",
     "subtitle": "Tap to order directly",
     "platform": "whatsapp",

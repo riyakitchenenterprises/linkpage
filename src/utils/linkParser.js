@@ -1,5 +1,5 @@
 /**
- * Link Parser & Platform Auto-Detector for Riya Kitchen
+ * Link Parser & Platform Auto-Detector for Riya’s Kitchen
  */
 
 export const ICONS = {
