@@ -1000,6 +1000,12 @@
   font-weight: 600;
 }
 
+.bill-delivery-val {
+  font-weight: 600;
+  font-size: 0.92rem;
+  color: var(--text-main, #231815);
+}
+
 .bill-divider {
   height: 1px;
   background: var(--card-border, #EFE4D6);

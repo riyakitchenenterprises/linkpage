@@ -144,7 +144,7 @@ class MenuManager {
 
   getCartTotals() {
     let totalItems = 0;
-    let totalPrice = 0;
+    let itemsTotal = 0;
     const itemsList = [];
 
     for (const [id, qty] of Object.entries(this.cart)) {
@@ -152,13 +152,16 @@ class MenuManager {
         const item = this.getItemById(id);
         if (item) {
           totalItems += qty;
-          totalPrice += item.price * qty;
+          itemsTotal += item.price * qty;
           itemsList.push({ ...item, quantity: qty, itemTotal: item.price * qty });
         }
       }
     }
 
-    return { totalItems, totalPrice, itemsList };
+    const deliveryFee = totalItems > 0 ? 30 : 0;
+    const grandTotal = itemsTotal + deliveryFee;
+
+    return { totalItems, itemsTotal, deliveryFee, grandTotal, totalPrice: grandTotal, itemsList };
   }
 
   setItemQuantity(id, qty) {
@@ -477,7 +480,7 @@ class MenuManager {
             </div>
             <div class="cart-price-info">
               <span id="cart-total-price" class="cart-total-price">₹0</span>
-              <span class="cart-tax-hint">plus delivery</span>
+              <span class="cart-tax-hint">incl. ₹30 delivery</span>
             </div>
           </div>
 
@@ -513,12 +516,12 @@ class MenuManager {
           <!-- Price Breakdown Summary -->
           <div class="bill-summary-card">
             <div class="bill-row">
-              <span>Items Total</span>
+              <span>Cakes Subtotal</span>
               <span id="bill-subtotal" class="bill-subtotal-val">₹0</span>
             </div>
             <div class="bill-row delivery-row">
-              <span>Delivery Charges</span>
-              <span class="delivery-badge-note">Confirmed on WhatsApp</span>
+              <span>Standard Delivery</span>
+              <span id="bill-delivery" class="bill-delivery-val">₹30</span>
             </div>
             <div class="bill-divider"></div>
             <div class="bill-row total-row">
@@ -694,7 +697,7 @@ class MenuManager {
    * Update Floating Cart and Drawer Content
    */
   updateUI() {
-    const { totalItems, totalPrice, itemsList } = this.getCartTotals();
+    const { totalItems, itemsTotal, deliveryFee, grandTotal, itemsList } = this.getCartTotals();
 
     // 1. Update Floating Cart Bar
     const floatingBar = document.getElementById('floating-cart-bar');
@@ -716,15 +719,17 @@ class MenuManager {
     }
 
     if (badgeCount) badgeCount.textContent = totalItems;
-    if (totalPriceEl) totalPriceEl.textContent = `₹${totalPrice}`;
+    if (totalPriceEl) totalPriceEl.textContent = `₹${grandTotal}`;
 
     // 2. Update Drawer Cart Items
     const drawerItemsContainer = document.getElementById('drawer-cart-items');
     const billSubtotal = document.getElementById('bill-subtotal');
+    const billDelivery = document.getElementById('bill-delivery');
     const billGrandtotal = document.getElementById('bill-grandtotal');
 
-    if (billSubtotal) billSubtotal.textContent = `₹${totalPrice}`;
-    if (billGrandtotal) billGrandtotal.textContent = `₹${totalPrice}`;
+    if (billSubtotal) billSubtotal.textContent = `₹${itemsTotal}`;
+    if (billDelivery) billDelivery.textContent = `₹${deliveryFee}`;
+    if (billGrandtotal) billGrandtotal.textContent = `₹${grandTotal}`;
 
     if (drawerItemsContainer) {
       if (itemsList.length === 0) {
@@ -970,7 +975,7 @@ class MenuManager {
    * Validate and generate WhatsApp order
    */
   handleOrderSubmission() {
-    const { totalItems, totalPrice, itemsList } = this.getCartTotals();
+    const { totalItems, itemsTotal, deliveryFee, grandTotal, itemsList } = this.getCartTotals();
     const errorEl = document.getElementById('checkout-error-msg');
 
     if (totalItems === 0) {
@@ -1040,8 +1045,9 @@ ${notes ? `✨ *Message on Cake / Notes:* ${notes}\n` : ''}━━━━━━━
 📋 *CAKE SELECTION:*
 ${itemsFormatted}
 ━━━━━━━━━━━━━━━━━━━━
-💰 *Subtotal:* ₹${totalPrice}
-🚚 *Delivery:* To be confirmed based on location
+💰 *Cakes Subtotal:* ₹${itemsTotal}
+🚚 *Delivery Fee:* ₹${deliveryFee}
+💵 *Grand Total:* ₹${grandTotal}
 💳 *Payment Preference:* ${paymentLabel}
 ━━━━━━━━━━━━━━━━━━━━
 _Order submitted via Riya's Kitchen | Cakes_`;
