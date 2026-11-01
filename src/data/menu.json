@@ -1,0 +1,121 @@
+{
+  "categories": [
+    { "id": "all", "name": "All Items", "icon": "sparkles" },
+    { "id": "thalis", "name": "Thalis & Combos", "icon": "thali" },
+    { "id": "curries", "name": "Curries & Sabzi", "icon": "pot" },
+    { "id": "breads", "name": "Breads & Rice", "icon": "bread" },
+    { "id": "sweets", "name": "Sweets & Drinks", "icon": "dessert" }
+  ],
+  "items": [
+    {
+      "id": "thali-special",
+      "name": "Authentic Homestyle Thali",
+      "price": 180,
+      "category": "thalis",
+      "isVeg": true,
+      "badge": "Bestseller",
+      "description": "Slow-cooked Dal Tadka, Seasonal Sabzi, Bhindi Fry, Fragrant Basmati Rice, 3 Soft Phulkas, Fresh Dahi & Salad.",
+      "image": "/riya-kitchen-thali.jpg"
+    },
+    {
+      "id": "mini-thali",
+      "name": "Executive Mini Meal",
+      "price": 130,
+      "category": "thalis",
+      "isVeg": true,
+      "badge": "Popular",
+      "description": "Comfort Dal Tadka, Paneer Bhurji sabzi, 3 Soft Ghee Phulkas, Steamed Rice and Homemade Pickle.",
+      "image": ""
+    },
+    {
+      "id": "dal-khichdi",
+      "name": "Desi Ghee Comfort Dal Khichdi",
+      "price": 140,
+      "category": "thalis",
+      "isVeg": true,
+      "badge": "Homestyle",
+      "description": "Slow-cooked yellow moong lentils and basmati rice tempered with cumin, hing and pure cow ghee. Served with curd & papad.",
+      "image": ""
+    },
+    {
+      "id": "shahi-paneer",
+      "name": "Royal Shahi Paneer",
+      "price": 190,
+      "category": "curries",
+      "isVeg": true,
+      "badge": "Chef Special",
+      "description": "Fresh malai paneer simmered in a mildly spiced, velvety cashew-tomato sauce with cream and aromatic spices.",
+      "image": "/riya-paneer.jpg"
+    },
+    {
+      "id": "dal-tadka",
+      "name": "Dhaba Dal Tadka",
+      "price": 120,
+      "category": "curries",
+      "isVeg": true,
+      "badge": "Classic",
+      "description": "Golden toor dal slow-cooked to perfection, finished with double tadka of garlic, roasted cumin & Kashmiri red chili.",
+      "image": ""
+    },
+    {
+      "id": "aloo-gobi",
+      "name": "Homestyle Aloo Gobi Adraki",
+      "price": 130,
+      "category": "curries",
+      "isVeg": true,
+      "badge": "",
+      "description": "Tender cauliflower florets and potatoes cooked dry with julienned ginger, turmeric, and freshly ground garam masala.",
+      "image": ""
+    },
+    {
+      "id": "phulka-pack",
+      "name": "Tawa Phulkas (Set of 4)",
+      "price": 50,
+      "category": "breads",
+      "isVeg": true,
+      "badge": "Freshly Puffed",
+      "description": "100% whole wheat homestyle phulkas, puffed live on tawa and brushed with pure desi cow ghee.",
+      "image": ""
+    },
+    {
+      "id": "jeera-rice",
+      "name": "Basmati Jeera Rice",
+      "price": 90,
+      "category": "breads",
+      "isVeg": true,
+      "badge": "",
+      "description": "Aromatic long-grain basmati rice tempered with roasted cumin seeds, bay leaf, and fresh chopped coriander.",
+      "image": ""
+    },
+    {
+      "id": "methi-thepla",
+      "name": "Spiced Methi Theplas (Set of 3)",
+      "price": 75,
+      "category": "breads",
+      "isVeg": true,
+      "badge": "Healthy",
+      "description": "Soft traditional Gujarati flatbreads infused with fresh fenugreek leaves, ajwain and mild spices. Served with mango chunda.",
+      "image": ""
+    },
+    {
+      "id": "gulab-jamun",
+      "name": "Warm Gulab Jamuns (Set of 2)",
+      "price": 60,
+      "category": "sweets",
+      "isVeg": true,
+      "badge": "Must Try",
+      "description": "Melt-in-mouth golden khoya dumplings steeped in warm cardamom, saffron, and rose sugar syrup.",
+      "image": "/riya-gulab-jamun.jpg"
+    },
+    {
+      "id": "masala-chaas",
+      "name": "Chilled Masala Chaas",
+      "price": 40,
+      "category": "sweets",
+      "isVeg": true,
+      "badge": "Refreshing",
+      "description": "Slowly churned fresh curd buttermilk seasoned with roasted cumin powder, black salt, fresh mint, and coriander.",
+      "image": ""
+    }
+  ]
+}

@@ -3,6 +3,8 @@
    Warm Cream & Terracotta Aesthetic for Daily Homemade Food Business
    ========================================================================== */
 
+@import './menu.css';
+
 :root {
   /* Color Palette */
   --bg-cream: #FAF5ED;

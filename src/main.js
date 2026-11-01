@@ -2,6 +2,7 @@ import linksData from './data/links.json';
 import specialsData from './data/specials.json';
 import kitchenInfoData from './data/kitchenInfo.json';
 import { parseLinkItem, ICONS } from './utils/linkParser.js';
+import { menuManager } from './utils/menuManager.js';
 
 const ARROW_SVG = `
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -40,6 +41,8 @@ export function renderLinks() {
         if (targetEl) {
           e.preventDefault();
           targetEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          targetEl.classList.add('nav-focus-pulse');
+          setTimeout(() => targetEl.classList.remove('nav-focus-pulse'), 1500);
         }
       });
     }
@@ -234,6 +237,7 @@ function setupShare() {
 // Initialize on DOM Ready
 document.addEventListener('DOMContentLoaded', () => {
   renderLinks();
+  menuManager.init();
   renderSpecials();
   renderKitchenInfo();
   setupShare();
