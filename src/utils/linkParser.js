@@ -59,6 +59,14 @@ export const ICONS = {
       <circle cx="12" cy="10" r="3"></circle>
     </svg>`,
 
+  social: `
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="link-icon-svg">
+      <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+      <circle cx="9" cy="7" r="4"></circle>
+      <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+      <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+    </svg>`,
+
   generic: `
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="link-icon-svg">
       <circle cx="12" cy="12" r="10"></circle>
@@ -125,6 +133,12 @@ export function parseLinkItem(item) {
     } else {
       defaultSubtitle = 'riyakitchenenterprises';
     }
+  } else if (lower.includes('social') || lower.includes('follow')) {
+    platform = 'social';
+    iconName = 'social';
+    defaultTitle = 'Follow Us on Social Media';
+    defaultSubtitle = 'Instagram & Facebook • @riyakitchenenterprises';
+    isExternal = false;
   } else if (lower.startsWith('#') || lower.includes('menu')) {
     platform = 'menu';
     iconName = 'menu';

@@ -7,18 +7,11 @@
     "platform": "menu"
   },
   {
-    "id": "instagram",
-    "url": "https://www.instagram.com/riyakitchenenterprises/",
-    "title": "Follow Our Bakery on Instagram",
-    "subtitle": "@riyakitchenenterprises",
-    "platform": "instagram"
-  },
-  {
-    "id": "facebook",
-    "url": "https://www.facebook.com/riyakitchenenterprises/",
-    "title": "Find Us on Facebook",
-    "subtitle": "riyakitchenenterprises",
-    "platform": "facebook"
+    "id": "social",
+    "url": "#follow-modal",
+    "title": "Follow Us on Social Media",
+    "subtitle": "Instagram & Facebook • @riyakitchenenterprises",
+    "platform": "social"
   },
   {
     "id": "email",

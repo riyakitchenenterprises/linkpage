@@ -4,6 +4,7 @@ import kitchenInfoData from './data/kitchenInfo.json';
 import { parseLinkItem, ICONS } from './utils/linkParser.js';
 import { menuManager } from './utils/menuManager.js';
 import { checkServiceability, checkGPSLocation } from './utils/deliveryChecker.js';
+import { followModalManager } from './utils/followModal.js';
 
 const ARROW_SVG = `
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -39,6 +40,11 @@ export function renderLinks() {
       a.addEventListener('click', (e) => {
         e.preventDefault();
         menuManager.openMenuWindow();
+      });
+    } else if (parsed.platform === 'social' || parsed.url.includes('follow') || item.id === 'social') {
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        followModalManager.open();
       });
     } else if (parsed.url.startsWith('#')) {
       // Smooth scroll for internal hashes
@@ -345,5 +351,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
   if (window.location.hash === '#menu' || window.location.hash === '#digital-menu-section') {
     menuManager.openMenuWindow();
+  }
+  if (window.location.hash === '#follow' || window.location.hash === '#follow-modal') {
+    followModalManager.open();
   }
 });

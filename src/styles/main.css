@@ -360,7 +360,15 @@ body::before {
   height: 22px;
 }
 
-/* Platform Colors */
+.link-card[data-platform="social"] .link-icon-box {
+  background: linear-gradient(135deg, #FDE8ED 0%, #EBF2FE 100%);
+  color: #C13584;
+  border: 1px solid rgba(193, 53, 132, 0.2);
+}
+.link-card[data-platform="social"]:hover {
+  border-color: rgba(193, 53, 132, 0.4);
+}
+
 .link-card[data-platform="instagram"] .link-icon-box {
   background: linear-gradient(135deg, #FDE8ED 0%, #FEECE2 100%);
   color: #C13584;
