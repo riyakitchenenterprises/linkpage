@@ -6,6 +6,35 @@ import { ICONS } from './linkParser.js';
 const STORAGE_KEY_CART = 'rk_cart_state';
 const STORAGE_KEY_CUSTOMER = 'rk_customer_info';
 
+// Standard 1-Hour Cake Delivery Slots (Bakery open for delivery 10 AM to 12 AM Midnight)
+const CAKE_DELIVERY_SLOTS = [
+  { id: 'slot-10-11', label: '10:00 AM – 11:00 AM (Morning)', startHour: 10, endHour: 11 },
+  { id: 'slot-11-12', label: '11:00 AM – 12:00 PM (Morning)', startHour: 11, endHour: 12 },
+  { id: 'slot-12-13', label: '12:00 PM – 1:00 PM (Lunch)', startHour: 12, endHour: 13 },
+  { id: 'slot-13-14', label: '1:00 PM – 2:00 PM (Early Afternoon)', startHour: 13, endHour: 14 },
+  { id: 'slot-14-15', label: '2:00 PM – 3:00 PM (Afternoon)', startHour: 14, endHour: 15 },
+  { id: 'slot-15-16', label: '3:00 PM – 4:00 PM (Tea Time)', startHour: 15, endHour: 16 },
+  { id: 'slot-16-17', label: '4:00 PM – 5:00 PM (Tea Time)', startHour: 16, endHour: 17 },
+  { id: 'slot-17-18', label: '5:00 PM – 6:00 PM (Early Evening)', startHour: 17, endHour: 18 },
+  { id: 'slot-18-19', label: '6:00 PM – 7:00 PM (Evening)', startHour: 18, endHour: 19 },
+  { id: 'slot-19-20', label: '7:00 PM – 8:00 PM (Evening Celebration)', startHour: 19, endHour: 20 },
+  { id: 'slot-20-21', label: '8:00 PM – 9:00 PM (Dinner & Party)', startHour: 20, endHour: 21 },
+  { id: 'slot-21-22', label: '9:00 PM – 10:00 PM (Late Night)', startHour: 21, endHour: 22 },
+  { id: 'slot-22-23', label: '10:00 PM – 11:00 PM (Late Night)', startHour: 22, endHour: 23 },
+  { id: 'slot-23-24', label: '11:00 PM – 12:00 AM (Midnight Delivery 🎂)', startHour: 23, endHour: 24 }
+];
+
+function formatYMD(d) {
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+}
+
+function formatFriendlyDate(d) {
+  return d.toLocaleDateString('en-IN', { weekday: 'short', day: 'numeric', month: 'short' });
+}
+
 // SVG Icons for the Menu & Cart
 const MENU_ICONS = {
   cart: `
@@ -94,7 +123,9 @@ class MenuManager {
     this.activeDietary = 'all'; // 'all' | 'veg' | 'egg' | 'non-veg'
     this.activeViewMode = 'digital'; // 'digital' | 'card'
     this.searchQuery = '';
-    this.selectedMealSlot = 'Lunch (12:30 PM - 2:30 PM)';
+    this.selectedDateType = 'today'; // 'today' | 'tomorrow' | 'custom'
+    this.selectedDate = ''; // 'YYYY-MM-DD'
+    this.selectedTimeSlot = '';
     this.selectedPaymentMode = 'pay_confirmation'; // 'pay_confirmation' | 'razorpay_link'
     this.lastGeneratedWhatsAppUrl = '';
     this.lastOrderSummaryText = '';
@@ -576,26 +607,55 @@ class MenuManager {
               ></textarea>
             </div>
 
-            <!-- Delivery Slot Selector -->
-            <div class="form-group">
-              <label class="form-label">Preferred Cake Delivery Slot</label>
-              <div class="slot-chips-group" id="meal-slot-group">
-                <button type="button" class="slot-chip is-selected" data-slot="Normal Cake (1-2 Hours Express Delivery • Till 12 AM)">
-                  <span class="slot-icon">⚡</span>
-                  <span>Normal Cake (1–2 Hr Express • Till 12 AM)</span>
+            <!-- Delivery Date & Time Selector (2-4 Hours Advance Notice) -->
+            <div class="form-group datetime-slot-group">
+              <div class="datetime-label-row">
+                <label class="form-label" for="delivery-date-input">Delivery Date & Time Slot <span class="req">*</span></label>
+                <span class="advance-pill-badge">⚡ 2–4 hrs advance notice</span>
+              </div>
+
+              <!-- Quick Date Chips -->
+              <div class="date-chips-row" id="date-chips-row" role="group" aria-label="Select delivery date">
+                <button type="button" class="date-chip is-selected" data-date-type="today">
+                  <span class="chip-title">Today</span>
+                  <span class="chip-subtitle" id="quick-date-today-sub">--</span>
                 </button>
-                <button type="button" class="slot-chip" data-slot="Premium Cake 4-Hour Slot (1:00 PM - 12:00 AM • Order by 8 PM)">
-                  <span class="slot-icon">🌟</span>
-                  <span>Premium Cake (4 Hr Slot • 1 PM – 12 AM)</span>
+                <button type="button" class="date-chip" data-date-type="tomorrow">
+                  <span class="chip-title">Tomorrow</span>
+                  <span class="chip-subtitle" id="quick-date-tomorrow-sub">--</span>
                 </button>
-                <button type="button" class="slot-chip" data-slot="Next-Day 1:00 PM Afternoon Slot (Orders after 9 PM / Pre-order)">
-                  <span class="slot-icon">📅</span>
-                  <span>Next-Day 1:00 PM Slot (After 9 PM / Pre-order)</span>
+                <button type="button" class="date-chip" data-date-type="custom">
+                  <span class="chip-title">Pick Date</span>
+                  <span class="chip-subtitle">📅 Calendar</span>
                 </button>
-                <button type="button" class="slot-chip" data-slot="Custom Pre-Order / Future Date">
-                  <span class="slot-icon">🎂</span>
-                  <span>Custom Pre-Order / Future Date</span>
-                </button>
+              </div>
+
+              <!-- Custom Date Picker Field -->
+              <div class="custom-date-field-wrap" id="custom-date-field-wrap" style="display: none;">
+                <input 
+                  type="date" 
+                  id="delivery-date-input" 
+                  class="form-input date-input-control" 
+                />
+              </div>
+
+              <!-- Time Slot Dropdown -->
+              <div class="time-slot-wrapper">
+                <label for="delivery-time-select" class="time-field-label">
+                  <span>Select Delivery Time Window:</span>
+                </label>
+                <div class="select-input-container">
+                  <span class="select-prefix-icon" aria-hidden="true">🕒</span>
+                  <select id="delivery-time-select" class="form-select time-dropdown" required>
+                    <!-- Populated dynamically based on 2-4 hrs advance calculation -->
+                  </select>
+                </div>
+              </div>
+
+              <!-- Advance Notice Helper -->
+              <div id="advance-notice-info" class="advance-notice-info">
+                <span class="notice-icon" aria-hidden="true">🎂</span>
+                <span id="advance-notice-text">All cakes are baked 100% fresh upon order. Please allow 2–4 hours advance notice.</span>
               </div>
             </div>
 
@@ -901,16 +961,62 @@ class MenuManager {
       backdrop.addEventListener('click', () => this.closeDrawer());
     }
 
-    // 8. Meal Slot Chips Selection
-    const slotGroup = document.getElementById('meal-slot-group');
-    if (slotGroup) {
-      slotGroup.addEventListener('click', (e) => {
-        const chip = e.target.closest('.slot-chip');
-        if (!chip) return;
+    // 8. Delivery Date & Time Picker Listeners
+    const dateChipsRow = document.getElementById('date-chips-row');
+    const dateInput = document.getElementById('delivery-date-input');
+    const timeSelect = document.getElementById('delivery-time-select');
 
-        slotGroup.querySelectorAll('.slot-chip').forEach(c => c.classList.remove('is-selected'));
-        chip.classList.add('is-selected');
-        this.selectedMealSlot = chip.getAttribute('data-slot');
+    if (dateChipsRow) {
+      dateChipsRow.addEventListener('click', (e) => {
+        const chip = e.target.closest('.date-chip');
+        if (!chip || chip.classList.contains('is-disabled')) return;
+
+        const dateType = chip.getAttribute('data-date-type');
+        const todayObj = new Date();
+        const tomorrowObj = new Date(todayObj.getTime() + 86400000);
+
+        this.selectedDateType = dateType;
+
+        if (dateType === 'today') {
+          this.selectedDate = formatYMD(todayObj);
+          if (dateInput) dateInput.value = this.selectedDate;
+        } else if (dateType === 'tomorrow') {
+          this.selectedDate = formatYMD(tomorrowObj);
+          if (dateInput) dateInput.value = this.selectedDate;
+        } else if (dateType === 'custom') {
+          if (dateInput) {
+            this.selectedDate = dateInput.value || formatYMD(todayObj);
+            dateInput.focus();
+          }
+        }
+
+        this.syncDateChipsUI();
+        this.renderTimeSlots();
+      });
+    }
+
+    if (dateInput) {
+      dateInput.addEventListener('change', () => {
+        this.selectedDate = dateInput.value;
+        const todayObj = new Date();
+        const tomorrowObj = new Date(todayObj.getTime() + 86400000);
+
+        if (this.selectedDate === formatYMD(todayObj)) {
+          this.selectedDateType = 'today';
+        } else if (this.selectedDate === formatYMD(tomorrowObj)) {
+          this.selectedDateType = 'tomorrow';
+        } else {
+          this.selectedDateType = 'custom';
+        }
+
+        this.syncDateChipsUI();
+        this.renderTimeSlots();
+      });
+    }
+
+    if (timeSelect) {
+      timeSelect.addEventListener('change', () => {
+        this.selectedTimeSlot = timeSelect.value;
       });
     }
 
@@ -953,10 +1059,123 @@ class MenuManager {
     }
   }
 
+  setupDateTimePicker() {
+    const todayObj = new Date();
+    const tomorrowObj = new Date(todayObj.getTime() + 86400000);
+
+    const todayYMD = formatYMD(todayObj);
+    const tomorrowYMD = formatYMD(tomorrowObj);
+
+    const todaySub = document.getElementById('quick-date-today-sub');
+    const tomorrowSub = document.getElementById('quick-date-tomorrow-sub');
+    const dateInput = document.getElementById('delivery-date-input');
+
+    if (todaySub) todaySub.textContent = todayObj.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
+    if (tomorrowSub) tomorrowSub.textContent = tomorrowObj.toLocaleDateString('en-IN', { day: 'numeric', month: 'short' });
+
+    // Calculate if any slots are left today (requires at least 2 hours advance notice before 12 AM midnight)
+    const currentHour = todayObj.getHours();
+    const currentMin = todayObj.getMinutes();
+    const earliestHour = currentHour + 2 + (currentMin > 15 ? 1 : 0);
+    const todayAvailableSlots = CAKE_DELIVERY_SLOTS.filter(s => s.startHour >= earliestHour);
+
+    const todayChip = document.querySelector('[data-date-type="today"]');
+
+    if (dateInput) {
+      dateInput.min = todayYMD;
+    }
+
+    if (todayAvailableSlots.length === 0) {
+      // Today is closed for fresh 2-4 hr baking
+      if (todayChip) {
+        todayChip.classList.add('is-disabled');
+        todayChip.setAttribute('title', 'Today closed (requires 2-4 hrs advance booking before 12 AM)');
+      }
+      this.selectedDateType = 'tomorrow';
+      this.selectedDate = tomorrowYMD;
+      if (dateInput) dateInput.value = tomorrowYMD;
+    } else {
+      if (todayChip) {
+        todayChip.classList.remove('is-disabled');
+        todayChip.removeAttribute('title');
+      }
+      if (!this.selectedDate || this.selectedDateType === 'today') {
+        this.selectedDateType = 'today';
+        this.selectedDate = todayYMD;
+        if (dateInput) dateInput.value = todayYMD;
+      }
+    }
+
+    this.syncDateChipsUI();
+    this.renderTimeSlots();
+  }
+
+  syncDateChipsUI() {
+    const chips = document.querySelectorAll('.date-chip');
+    chips.forEach(chip => {
+      const type = chip.getAttribute('data-date-type');
+      chip.classList.toggle('is-selected', type === this.selectedDateType);
+    });
+
+    const customWrap = document.getElementById('custom-date-field-wrap');
+    if (customWrap) {
+      customWrap.style.display = this.selectedDateType === 'custom' ? 'block' : 'none';
+    }
+  }
+
+  renderTimeSlots() {
+    const select = document.getElementById('delivery-time-select');
+    const noticeEl = document.getElementById('advance-notice-info');
+    const noticeText = document.getElementById('advance-notice-text');
+    if (!select) return;
+
+    const todayObj = new Date();
+    const todayYMD = formatYMD(todayObj);
+    const isToday = this.selectedDate === todayYMD;
+
+    let availableSlots = [];
+    if (isToday) {
+      const currentHour = todayObj.getHours();
+      const currentMin = todayObj.getMinutes();
+      const earliestHour = currentHour + 2 + (currentMin > 15 ? 1 : 0);
+      availableSlots = CAKE_DELIVERY_SLOTS.filter(s => s.startHour >= earliestHour);
+
+      if (availableSlots.length === 0) {
+        if (noticeEl && noticeText) {
+          noticeEl.className = 'advance-notice-info is-warning';
+          noticeText.textContent = "⚠️ Today's 2–4 hr advance booking cutoff has passed. Please select Tomorrow or a future date.";
+        }
+      } else {
+        if (noticeEl && noticeText) {
+          noticeEl.className = 'advance-notice-info';
+          noticeText.textContent = `⚡ 2–4 hrs advance baking: Earliest delivery available today starts from ${availableSlots[0].label}.`;
+        }
+      }
+    } else {
+      availableSlots = [...CAKE_DELIVERY_SLOTS];
+      if (noticeEl && noticeText) {
+        noticeEl.className = 'advance-notice-info';
+        noticeText.textContent = "🌟 Advance booking confirmed! We bake your cake fresh on your chosen delivery date.";
+      }
+    }
+
+    if (availableSlots.length === 0) {
+      select.innerHTML = `<option value="">No slots available for today</option>`;
+      this.selectedTimeSlot = '';
+    } else {
+      select.innerHTML = availableSlots.map(slot => `
+        <option value="${escapeHTML(slot.label)}">${escapeHTML(slot.label)}</option>
+      `).join('') + `<option value="Custom Time (Mention in Notes below)">Custom Time (Mention in Notes below)</option>`;
+
+      this.selectedTimeSlot = select.value;
+    }
+  }
+
   openDrawer() {
     const drawer = document.getElementById('checkout-drawer');
     const backdrop = document.getElementById('checkout-backdrop');
     if (drawer && backdrop) {
+      this.setupDateTimePicker();
       backdrop.classList.add('is-active');
       drawer.classList.add('is-open');
     }
@@ -1012,6 +1231,44 @@ class MenuManager {
       return;
     }
 
+    if (!this.selectedDate) {
+      this.showFormError("Please select a Preferred Delivery Date.");
+      return;
+    }
+
+    if (!this.selectedTimeSlot || this.selectedTimeSlot.includes("No slots available")) {
+      this.showFormError("Please select an available Delivery Time Slot (requires 2–4 hours advance booking).");
+      return;
+    }
+
+    // Verify 2-4 hours advance notice if ordering for today
+    const now = new Date();
+    const todayYMD = formatYMD(now);
+    const tomorrowYMD = formatYMD(new Date(now.getTime() + 86400000));
+
+    if (this.selectedDate === todayYMD) {
+      const currentHour = now.getHours();
+      const currentMin = now.getMinutes();
+      const earliestHour = currentHour + 2 + (currentMin > 15 ? 1 : 0);
+      const matchedSlot = CAKE_DELIVERY_SLOTS.find(s => s.label === this.selectedTimeSlot);
+
+      if (matchedSlot && matchedSlot.startHour < earliestHour) {
+        this.showFormError("Please select a slot at least 2 to 4 hours in advance so our bakery has time to freshly bake your cake.");
+        return;
+      }
+    }
+
+    let dateText = '';
+    if (this.selectedDate === todayYMD) {
+      dateText = `Today (${formatFriendlyDate(now)})`;
+    } else if (this.selectedDate === tomorrowYMD) {
+      dateText = `Tomorrow (${formatFriendlyDate(new Date(now.getTime() + 86400000))})`;
+    } else {
+      const parts = this.selectedDate.split('-');
+      const customD = new Date(Number(parts[0]), Number(parts[1]) - 1, Number(parts[2]));
+      dateText = formatFriendlyDate(customD);
+    }
+
     // Clear error
     if (errorEl) errorEl.style.display = 'none';
 
@@ -1040,7 +1297,9 @@ class MenuManager {
 📍 *Delivery Address:*
 ${address}
 
-🕒 *Delivery Slot:* ${this.selectedMealSlot}
+📅 *Delivery Date:* ${dateText}
+🕒 *Delivery Time Slot:* ${this.selectedTimeSlot}
+⏱️ *Notice:* Booked 2–4 hrs in advance (Freshly Baked)
 ${notes ? `✨ *Message on Cake / Notes:* ${notes}\n` : ''}━━━━━━━━━━━━━━━━━━━━
 📋 *CAKE SELECTION:*
 ${itemsFormatted}

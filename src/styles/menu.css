@@ -1117,38 +1117,185 @@
   padding: 0.7rem 0.85rem;
 }
 
-/* Delivery Slot Chips */
-.slot-chips-group {
-  display: flex;
-  flex-direction: column;
-  gap: 0.45rem;
+/* Delivery Date & Time Selector (2-4 hrs advance booking) */
+.datetime-slot-group {
+  margin-bottom: 1.1rem;
 }
 
-.slot-chip {
+.datetime-label-row {
   display: flex;
   align-items: center;
-  gap: 0.55rem;
-  padding: 0.6rem 0.85rem;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.advance-pill-badge {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #92400E;
+  background: #FEF3C7;
+  padding: 0.2rem 0.55rem;
+  border-radius: var(--radius-pill, 9999px);
+  border: 1px solid #FCD34D;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.date-chips-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.45rem;
+  margin-bottom: 0.65rem;
+}
+
+.date-chip {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem 0.35rem;
+  background: #FFFFFF;
+  border: 1.5px solid var(--card-border, #EFE4D6);
+  border-radius: 14px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  font-family: var(--font-sans);
+  text-align: center;
+}
+
+.date-chip:hover {
+  border-color: var(--card-border-hover, #D8C3AE);
+  background: var(--bg-cream-warm, #FFF9F2);
+}
+
+.date-chip.is-selected {
+  background: var(--terracotta-light, #FBF0EF);
+  border-color: var(--terracotta-primary, #8A0C0D);
+  box-shadow: 0 2px 8px rgba(138, 12, 13, 0.12);
+}
+
+.date-chip .chip-title {
+  font-size: 0.86rem;
+  font-weight: 700;
+  color: var(--text-main, #231815);
+  line-height: 1.2;
+}
+
+.date-chip.is-selected .chip-title {
+  color: var(--terracotta-primary, #8A0C0D);
+}
+
+.date-chip .chip-subtitle {
+  font-size: 0.71rem;
+  color: var(--text-muted, #6B5E59);
+  margin-top: 2px;
+  white-space: nowrap;
+}
+
+.date-chip.is-selected .chip-subtitle {
+  color: var(--terracotta-primary, #8A0C0D);
+  font-weight: 600;
+}
+
+.date-chip:disabled,
+.date-chip.is-disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  background: #F3F4F6;
+  border-color: #E5E7EB;
+}
+
+.custom-date-field-wrap {
+  margin-bottom: 0.65rem;
+  animation: fadeIn 0.2s ease;
+}
+
+.date-input-control {
+  width: 100%;
+  padding: 0.65rem 0.85rem;
   background: #FFFFFF;
   border: 1.5px solid var(--card-border, #EFE4D6);
   border-radius: 12px;
   font-family: var(--font-sans);
-  font-size: 0.84rem;
+  font-size: 0.88rem;
+  color: var(--text-main, #231815);
+  outline: none;
+}
+
+.time-slot-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  margin-top: 0.25rem;
+}
+
+.time-field-label {
+  font-size: 0.8rem;
   font-weight: 600;
   color: var(--text-muted, #6B5E59);
-  cursor: pointer;
-  transition: all 0.18s ease;
-  text-align: left;
 }
 
-.slot-chip.is-selected {
-  background: var(--terracotta-light, #FBF0EF);
-  border-color: var(--terracotta-primary, #8A0C0D);
-  color: var(--terracotta-primary, #8A0C0D);
+.select-input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
 }
 
-.slot-icon {
+.select-prefix-icon {
+  position: absolute;
+  left: 0.85rem;
+  pointer-events: none;
   font-size: 1rem;
+  z-index: 2;
+}
+
+.time-dropdown {
+  width: 100%;
+  padding: 0.72rem 0.85rem 0.72rem 2.4rem;
+  background: #FFFFFF;
+  border: 1.5px solid var(--card-border, #EFE4D6);
+  border-radius: 12px;
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-main, #231815);
+  outline: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236B5E59' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.85rem center;
+  background-size: 14px;
+}
+
+.time-dropdown:focus {
+  border-color: var(--terracotta-primary, #8A0C0D);
+  box-shadow: 0 0 0 3px rgba(138, 12, 13, 0.08);
+}
+
+.advance-notice-info {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.45rem;
+  margin-top: 0.55rem;
+  background: var(--bg-cream-warm, #FFF9F2);
+  border: 1px dashed var(--terracotta-border, #E8D3C0);
+  border-radius: 10px;
+  padding: 0.5rem 0.75rem;
+  font-size: 0.77rem;
+  color: var(--text-muted, #6B5E59);
+  line-height: 1.35;
+}
+
+.advance-notice-info.is-warning {
+  background: #FEF3C7;
+  border-color: #FCD34D;
+  color: #92400E;
 }
 
 /* Payment Mode Grid */
