@@ -1,24 +1,31 @@
 {
   "enabled": true,
-  "heading": "Ordering & Kitchen Info",
+  "heading": "Cake Ordering & Delivery Timings",
+  "whatsappPhone": "",
   "details": [
     {
-      "type": "hours",
+      "type": "normal",
       "icon": "clock",
-      "title": "Ordering Hours",
-      "text": "Daily Pre-orders for Lunch & Dinner"
+      "title": "Normal Cakes (1–2 Hour Express)",
+      "text": "Baked 100% fresh on order! Delivered fast in 1–2 hours. Last delivery slot is 12:00 AM midnight."
     },
     {
-      "type": "delivery",
+      "type": "premium",
+      "icon": "clock",
+      "title": "Premium Cakes (4-Hour Delivery)",
+      "text": "Baking starts at 8:00 AM. Delivered in 4 hours. Deliveries run from 1:00 PM to 12:00 AM midnight."
+    },
+    {
+      "type": "slots",
       "icon": "truck",
-      "title": "Delivery & Pickup",
-      "text": "Home Delivery & Pre-Order Pickup available"
+      "title": "Same-Day Cutoff & Next-Day Slots",
+      "text": "Place last order by 8:00 PM for delivery by 12:00 AM. Orders after 9:00 PM are booked for next-day 1:00 PM delivery."
     },
     {
-      "type": "area",
+      "type": "fresh",
       "icon": "map",
-      "title": "Service Area",
-      "text": "Delivering to nearby locations (confirm address on WhatsApp)"
+      "title": "100% Freshly Baked Guarantee",
+      "text": "We never store pre-made cakes. Every cake is freshly handcrafted after your order is confirmed."
     }
   ]
 }

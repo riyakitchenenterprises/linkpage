@@ -1,395 +1,94 @@
 {
   "categories": [
-    { "id": "all", "name": "All Items", "icon": "sparkles" },
-    { "id": "maharashtrian", "name": "Assal Maharashtrian", "icon": "special" },
-    { "id": "veg-gravy", "name": "Veg Gravy", "icon": "curry" },
-    { "id": "chicken", "name": "Chicken Specialties", "icon": "chicken" },
-    { "id": "egg", "name": "Egg Specialties", "icon": "egg" },
-    { "id": "combos", "name": "Combos & Khichdi", "icon": "combo" },
-    { "id": "paratha", "name": "Paratha & Roti", "icon": "bread" },
-    { "id": "rice", "name": "Rice Dishes", "icon": "rice" },
-    { "id": "momos", "name": "Momos", "icon": "momos" },
-    { "id": "snacks", "name": "Fries & Maggi", "icon": "snacks" },
-    { "id": "dessert", "name": "Dessert", "icon": "dessert" }
+    { "id": "all", "name": "All Cakes", "icon": "sparkles" },
+    { "id": "normal", "name": "Normal Cakes (1–2 Hr)", "icon": "cake" },
+    { "id": "premium", "name": "Premium Cakes (4 Hr)", "icon": "star" },
+    { "id": "chocolate", "name": "Chocolate Specials", "icon": "heart" },
+    { "id": "bento", "name": "Bento & Mini Cakes", "icon": "gift" },
+    { "id": "custom", "name": "Celebration Cakes", "icon": "party" },
+    { "id": "pastries", "name": "Pastries & Slices", "icon": "sweet" }
   ],
   "items": [
     {
-      "id": "chapati-1",
-      "name": "Chapati (1 pc)",
-      "price": 20,
-      "category": "paratha",
+      "id": "classic-black-forest",
+      "name": "Classic Black Forest Cake (500g)",
+      "price": 450,
+      "category": "normal",
       "dietary": "veg",
-      "badge": "Fresh",
-      "description": "Soft handmade whole wheat chapati cooked homestyle on tawa."
+      "badge": "1–2 Hr Delivery",
+      "description": "Fluffy chocolate sponge, whipped vanilla cream, cherries, and dark chocolate flakes. Baked fresh."
     },
     {
-      "id": "jowar-roti-1",
-      "name": "Jowar Roti (1 pc)",
-      "price": 30,
-      "category": "paratha",
+      "id": "pineapple-fresh-cream",
+      "name": "Fresh Pineapple Cream Cake (500g)",
+      "price": 420,
+      "category": "normal",
       "dietary": "veg",
-      "badge": "Healthy",
-      "description": "Traditional hand-patted gluten-free jowar bhakri, freshly made."
+      "badge": "1–2 Hr Delivery",
+      "description": "Moist vanilla sponge infused with real pineapple compote and airy whipped cream."
     },
     {
-      "id": "puran-poli",
-      "name": "Puran Poli (1 pc) with Homemade Ghee Dip",
-      "price": 109,
-      "category": "maharashtrian",
+      "id": "butterscotch-crunch",
+      "name": "Butterscotch Praline Cake (500g)",
+      "price": 460,
+      "category": "normal",
       "dietary": "veg",
-      "badge": "Assal Maharashtrian",
-      "description": "Authentic Maharashtrian sweet flatbread stuffed with spiced chana dal jaggery puran, served with pure homemade ghee."
+      "badge": "1–2 Hr Delivery",
+      "description": "Rich caramel sponge layered with handcrafted crunchy cashew praline and butterscotch sauce."
     },
     {
-      "id": "aloo-paratha",
-      "name": "Aloo Paratha (1 pc)",
-      "price": 129,
-      "category": "paratha",
+      "id": "belgian-truffle-premium",
+      "name": "Royal Belgian Chocolate Truffle (500g / 1kg)",
+      "price": 650,
+      "category": "premium",
       "dietary": "veg",
-      "badge": "Homestyle",
-      "description": "Stuffed with spiced mashed potatoes, fresh green coriander, and roasted cumin."
+      "badge": "Premium 4-Hr Delivery",
+      "description": "Pure Belgian dark chocolate ganache, artisanal sponge. Starts baking at 8 AM, delivered in 4 hrs or next day."
     },
     {
-      "id": "pudina-paratha",
-      "name": "Pudina Paratha (1 pc)",
-      "price": 129,
-      "category": "paratha",
+      "id": "rasmalai-fusion-premium",
+      "name": "Artisanal Rasmalai Fusion Cake (500g / 1kg)",
+      "price": 680,
+      "category": "premium",
       "dietary": "veg",
-      "badge": "Flavorsome",
-      "description": "Multi-layered crispy paratha infused with fragrant fresh mint leaves."
+      "badge": "Premium 4-Hr Delivery",
+      "description": "Cardamom saffron sponge soaked in rabri, topped with fresh juicy rasmalai, roasted pistachios, and rose petals."
     },
     {
-      "id": "paneer-paratha",
-      "name": "Paneer Paratha (1 pc)",
-      "price": 169,
-      "category": "paratha",
+      "id": "red-velvet-cream-cheese",
+      "name": "Red Velvet with Cream Cheese Frosting (500g / 1kg)",
+      "price": 650,
+      "category": "premium",
       "dietary": "veg",
-      "badge": "Bestseller",
-      "description": "Generously filled with fresh spiced grated paneer, green chilies, and herbs."
+      "badge": "Premium 4-Hr Delivery",
+      "description": "Velvety crimson sponge layered with authentic tangy-sweet cream cheese frosting."
     },
     {
-      "id": "dal-fry",
-      "name": "Dal Fry",
-      "price": 169,
-      "category": "veg-gravy",
-      "dietary": "veg",
-      "badge": "",
-      "description": "Yellow toor dal slow-cooked and tempered with onions, tomatoes, and aromatic spices."
-    },
-    {
-      "id": "dal-tadka",
-      "name": "Dal Tadka",
-      "price": 189,
-      "category": "veg-gravy",
-      "dietary": "veg",
-      "badge": "Popular",
-      "description": "Classic dal finished with sizzling desi ghee, garlic, jeera, and red chili tadka."
-    },
-    {
-      "id": "aloo-matar",
-      "name": "Aloo Matar",
-      "price": 189,
-      "category": "veg-gravy",
-      "dietary": "veg",
-      "badge": "",
-      "description": "Fresh tender green peas and soft potatoes simmered in a spiced tomato-onion curry."
-    },
-    {
-      "id": "mix-veg",
-      "name": "Mix Veg",
-      "price": 219,
-      "category": "veg-gravy",
-      "dietary": "veg",
-      "badge": "Homestyle",
-      "description": "Wholesome seasonal vegetables cooked in a rich, mildly spiced homestyle gravy."
-    },
-    {
-      "id": "chole-masala",
-      "name": "Chole Masala",
-      "price": 219,
-      "category": "veg-gravy",
-      "dietary": "veg",
-      "badge": "Popular",
-      "description": "Authentic Amritsari-style chickpeas slow-simmered in rich spices, ginger, and amchur."
-    },
-    {
-      "id": "rajma-masala",
-      "name": "Rajma Masala",
-      "price": 219,
-      "category": "veg-gravy",
-      "dietary": "veg",
-      "badge": "Comfort Food",
-      "description": "Red kidney beans slow-cooked overnight in a thick tomato, onion, and roasted spice gravy."
-    },
-    {
-      "id": "matar-paneer",
-      "name": "Matar Paneer",
-      "price": 219,
-      "category": "veg-gravy",
-      "dietary": "veg",
-      "badge": "Bestseller",
-      "description": "Fresh cottage cheese cubes and sweet green peas simmered in a creamy tomato sauce."
-    },
-    {
-      "id": "paneer-masala",
-      "name": "Paneer Masala",
-      "price": 249,
-      "category": "veg-gravy",
+      "id": "nutella-hazelnut-premium",
+      "name": "Nutella Ferrero Hazelnut Cake",
+      "price": 750,
+      "category": "chocolate",
       "dietary": "veg",
       "badge": "Chef Special",
-      "description": "Succulent paneer cubes tossed in a robust, fragrant tomato and onion masala."
+      "description": "Roasted hazelnuts, velvety Nutella glaze, and crispy wafer crunch in decadent chocolate layers."
     },
     {
-      "id": "egg-bhurji",
-      "name": "Egg Bhurji",
+      "id": "bento-korean-cake",
+      "name": "Korean Bento Cake (Mini Celebration)",
+      "price": 280,
+      "category": "bento",
+      "dietary": "veg",
+      "badge": "Express Delivery",
+      "description": "Cute aesthetic lunchbox cake with custom piping and personalized message."
+    },
+    {
+      "id": "chocolate-pastry-slice",
+      "name": "Dutch Chocolate Pastry",
       "price": 120,
-      "category": "egg",
-      "dietary": "egg",
-      "badge": "Spicy & Fresh",
-      "description": "Scrambled farm-fresh eggs spiced with chopped onions, tomatoes, and green chilies."
-    },
-    {
-      "id": "egg-curry",
-      "name": "Egg Curry",
-      "price": 149,
-      "category": "egg",
-      "dietary": "egg",
-      "badge": "Homestyle",
-      "description": "Boiled eggs simmered gently in a comforting, mildly spiced coconut and onion gravy."
-    },
-    {
-      "id": "egg-masala",
-      "name": "Egg Masala",
-      "price": 149,
-      "category": "egg",
-      "dietary": "egg",
-      "badge": "Flavorful",
-      "description": "Pan-roasted boiled eggs coated in a thick, spicy tomato-onion masala."
-    },
-    {
-      "id": "chicken-curry",
-      "name": "Chicken Curry",
-      "price": 229,
-      "category": "chicken",
-      "dietary": "non-veg",
-      "badge": "Homestyle",
-      "description": "Tender chicken pieces cooked slow in an authentic homestyle spiced curry."
-    },
-    {
-      "id": "chicken-masala",
-      "name": "Chicken Masala",
-      "price": 249,
-      "category": "chicken",
-      "dietary": "non-veg",
-      "badge": "Chef Special",
-      "description": "Juicy chicken simmered in a rich, deeply roasted onion, garlic, and garam masala sauce."
-    },
-    {
-      "id": "chicken-65",
-      "name": "Chicken 65",
-      "price": 159,
-      "category": "chicken",
-      "dietary": "non-veg",
-      "badge": "Crispy Starter",
-      "description": "Spicy, crispy fried chicken chunks tempered with fragrant curry leaves and green chilies."
-    },
-    {
-      "id": "steam-rice",
-      "name": "Steam Rice",
-      "price": 89,
-      "category": "rice",
+      "category": "pastries",
       "dietary": "veg",
-      "badge": "Comfort",
-      "description": "Fluffy, freshly steamed long-grain basmati rice."
-    },
-    {
-      "id": "jeera-rice",
-      "name": "Jeera Rice",
-      "price": 109,
-      "category": "rice",
-      "dietary": "veg",
-      "badge": "Aromatic",
-      "description": "Fragrant basmati rice tossed with roasted cumin seeds and desi ghee."
-    },
-    {
-      "id": "lemon-rice",
-      "name": "Lemon Rice",
-      "price": 119,
-      "category": "rice",
-      "dietary": "veg",
-      "badge": "Tangy",
-      "description": "South-Indian style seasoned rice tempered with fresh lemon juice, mustard seeds, and crunchy peanuts."
-    },
-    {
-      "id": "tomato-rice",
-      "name": "Tomato Rice",
-      "price": 129,
-      "category": "rice",
-      "dietary": "veg",
-      "badge": "Tangy & Spiced",
-      "description": "Basmati rice cooked with ripe tomatoes, curry leaves, and coastal spices."
-    },
-    {
-      "id": "egg-rice",
-      "name": "Egg Rice",
-      "price": 129,
-      "category": "rice",
-      "dietary": "egg",
-      "badge": "Popular",
-      "description": "Aromatic rice tossed with scrambled eggs, mild spices, and spring herbs."
-    },
-    {
-      "id": "curd-rice",
-      "name": "Curd Rice",
-      "price": 149,
-      "category": "rice",
-      "dietary": "veg",
-      "badge": "Cooling",
-      "description": "Traditional comfort rice mixed with fresh creamy curd and tempered with mustard and ginger."
-    },
-    {
-      "id": "rajma-chawal-combo",
-      "name": "Rajma Chawal Combo",
-      "price": 169,
-      "category": "combos",
-      "dietary": "veg",
-      "badge": "Classic Combo",
-      "description": "Slow-cooked Rajma Masala served with Steamed Basmati Rice, onions, and pickle."
-    },
-    {
-      "id": "chole-chawal-combo",
-      "name": "Chole Chawal Combo",
-      "price": 169,
-      "category": "combos",
-      "dietary": "veg",
-      "badge": "Classic Combo",
-      "description": "Spiced Punjabi Chole served with fragrant Steamed Rice and fresh salad."
-    },
-    {
-      "id": "dal-khichdi",
-      "name": "Dal Khichdi",
-      "price": 169,
-      "category": "combos",
-      "dietary": "veg",
-      "badge": "Comfort Food",
-      "description": "Nutritious moong dal and rice tempered with pure desi cow ghee, cumin, and hing."
-    },
-    {
-      "id": "thalipeeth",
-      "name": "Thalipeeth (2 pc)",
-      "price": 169,
-      "category": "maharashtrian",
-      "dietary": "veg",
-      "badge": "Assal Maharashtrian",
-      "description": "Traditional Maharashtrian multi-grain spiced flatbread served with fresh curd or white butter."
-    },
-    {
-      "id": "kotmir-wadi",
-      "name": "Kotmir Wadi (8 pc)",
-      "price": 89,
-      "category": "maharashtrian",
-      "dietary": "veg",
-      "badge": "Crisp Snack",
-      "description": "Gram flour cakes infused with fresh coriander and spices, pan-crisped to perfection."
-    },
-    {
-      "id": "aloo-wadi",
-      "name": "Aloo Wadi (8 pc)",
-      "price": 89,
-      "category": "maharashtrian",
-      "dietary": "veg",
-      "badge": "Traditional",
-      "description": "Tender colocasia leaves rolled with sweet-tangy gram flour paste and sliced into crispy pinwheels."
-    },
-    {
-      "id": "veg-steam-momos",
-      "name": "Veg Steam Momos",
-      "price": 119,
-      "category": "momos",
-      "dietary": "veg",
-      "badge": "Steamed Hot",
-      "description": "Delicate dumplings stuffed with minced cabbage, carrots, onions, and served with spicy red chutney."
-    },
-    {
-      "id": "veg-fried-momos",
-      "name": "Veg Fried Momos",
-      "price": 149,
-      "category": "momos",
-      "dietary": "veg",
-      "badge": "Crispy",
-      "description": "Golden crispy fried vegetable momos paired with fiery garlic chili sauce."
-    },
-    {
-      "id": "chicken-steam-momos",
-      "name": "Chicken Steam Momos",
-      "price": 149,
-      "category": "momos",
-      "dietary": "non-veg",
-      "badge": "Bestseller",
-      "description": "Steamed dumplings loaded with seasoned minced chicken, herbs, and spicy momo dip."
-    },
-    {
-      "id": "chicken-fried-momos",
-      "name": "Chicken Fried Momos",
-      "price": 139,
-      "category": "momos",
-      "dietary": "non-veg",
-      "badge": "Popular",
-      "description": "Crisp deep-fried chicken dumplings with crunchy coating and juicy spiced chicken filling."
-    },
-    {
-      "id": "salted-fries",
-      "name": "Salted Fries",
-      "price": 149,
-      "category": "snacks",
-      "dietary": "veg",
-      "badge": "Snacks",
-      "description": "Golden crispy potato fries seasoned lightly with rock salt."
-    },
-    {
-      "id": "peri-peri-fries",
-      "name": "Peri Peri Fries",
-      "price": 159,
-      "category": "snacks",
-      "dietary": "veg",
-      "badge": "Spicy",
-      "description": "Crispy hot french fries tossed in zesty, tangy Peri Peri spice seasoning."
-    },
-    {
-      "id": "plain-maggi",
-      "name": "Plain Maggi",
-      "price": 99,
-      "category": "snacks",
-      "dietary": "veg",
-      "badge": "Classic",
-      "description": "Nostalgic two-minute noodles cooked just right with classic tastemaker."
-    },
-    {
-      "id": "masala-maggi",
-      "name": "Masala Maggi",
-      "price": 119,
-      "category": "snacks",
-      "dietary": "veg",
-      "badge": "Desi Style",
-      "description": "Maggi tossed with sautéed onions, tomatoes, green chilies, and extra butter."
-    },
-    {
-      "id": "chocolate-pastry",
-      "name": "Chocolate Pastry",
-      "price": 149,
-      "category": "dessert",
-      "dietary": "veg",
-      "badge": "Sweet Tooth",
-      "description": "Rich, moist layers of chocolate sponge layered with decadent dark chocolate ganache."
-    },
-    {
-      "id": "chocolate-truffle-cake",
-      "name": "Chocolate Truffle Cake (500 gm)",
-      "price": 549,
-      "category": "dessert",
-      "dietary": "veg",
-      "badge": "Celebration",
-      "description": "Premium 500gm handcrafted dark chocolate truffle cake for birthdays and celebrations."
+      "badge": "Fresh Slice",
+      "description": "Individual slice of decadent dark chocolate truffle sponge with rich ganache."
     }
   ]
 }

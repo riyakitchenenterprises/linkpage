@@ -1,10 +1,10 @@
 {
   "enabled": true,
-  "title": "Today's Homestyle Special",
-  "badge": "Daily Special",
-  "dishName": "Authentic Homestyle Thali",
+  "title": "Today's Bakery Special",
+  "badge": "Freshly Baked",
+  "dishName": "Dutch Truffle Chocolate Cake",
   "image": "/riya-kitchen-thali.jpg",
-  "imageAlt": "Freshly prepared Homestyle Thali by Riya’s Kitchen",
-  "description": "Slow-cooked Dal Tadka, Seasonal Mixed Veg, Crispy Bhindi Fry, Fragrant Basmati Rice, Soft Handmade Rotis, Fresh Dahi & Garden Salad.",
-  "note": "Cooked fresh every day in small, loving batches. No artificial preservatives."
+  "imageAlt": "Freshly Baked Cake by Riya’s Kitchen | Cakes",
+  "description": "Rich Belgian dark chocolate ganache layered with moist chocolate sponge. 100% fresh, handcrafted with premium ingredients.",
+  "note": "We bake everything fresh upon order. No preservatives or frozen cakes."
 }

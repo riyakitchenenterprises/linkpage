@@ -258,23 +258,23 @@ class MenuManager {
         <!-- Top App Bar -->
         <header class="menu-win-header">
           <div class="menu-win-title-wrap">
-            <h2 id="menu-win-title" class="menu-win-title">Riya’s Kitchen Menu</h2>
-            <span class="menu-win-tagline">Homemade Food | Made with Love</span>
+            <h2 id="menu-win-title" class="menu-win-title">Riya’s Kitchen | Cakes</h2>
+            <span class="menu-win-tagline">Freshly Baked on Order • Express & Premium Deliveries</span>
           </div>
-          <button id="close-menu-win-btn" class="menu-win-close-btn" aria-label="Close menu window">
+          <button id="close-menu-win-btn" class="menu-win-close-btn" aria-label="Close cake menu">
             ${MENU_ICONS.close}
           </button>
         </header>
 
-        <!-- View Mode Switcher: Digital Menu vs Original Menu Card -->
+        <!-- View Mode Switcher: Cake Menu vs Delivery Rules -->
         <div class="menu-mode-switcher" role="tablist">
           <button id="tab-mode-digital" class="mode-tab-btn is-active" data-mode="digital">
-            <span class="tab-icon">${MENU_ICONS.menuBook}</span>
-            <span>Digital Order Menu</span>
+            <span class="tab-icon">🎂</span>
+            <span>Cake Menu</span>
           </button>
           <button id="tab-mode-card" class="mode-tab-btn" data-mode="card">
-            <span class="tab-icon">${MENU_ICONS.image}</span>
-            <span>Original Menu Card</span>
+            <span class="tab-icon">⏰</span>
+            <span>Delivery Rules & Timings</span>
           </button>
         </div>
 
@@ -290,9 +290,9 @@ class MenuManager {
                 type="search" 
                 id="menu-search-input" 
                 class="menu-search-input" 
-                placeholder="Search roti, paneer, chicken, momos, combos..." 
+                placeholder="Search chocolate truffle, pineapple, bento, red velvet..." 
                 autocomplete="off"
-                aria-label="Search menu items"
+                aria-label="Search cake menu"
               />
               <button id="menu-search-clear" class="search-clear-btn" style="display: none;" aria-label="Clear search">
                 ✕
@@ -336,18 +336,33 @@ class MenuManager {
             </div>
           </div>
 
-          <!-- TAB 2: Original Menu Card View -->
+          <!-- TAB 2: Delivery Rules & Timings -->
           <div id="menu-view-card" class="menu-view-content" style="display: none;">
-            <div class="menu-card-preview-wrapper">
-              <img 
-                src="/riya-kitchen-menu-card.jpg" 
-                alt="Official Riya's Kitchen Menu Card" 
-                class="menu-card-full-img" 
-                loading="eager"
-              />
+            <div class="cake-rules-card">
+              <div class="rule-box express-rule">
+                <div class="rule-badge">⚡ Express Delivery (1–2 Hours)</div>
+                <h4 class="rule-title">Normal Cakes</h4>
+                <p class="rule-desc">Baked 100% fresh upon order. Delivered to your doorstep in <strong>1 to 2 hours</strong>. Last delivery slot is available until <strong>12:00 AM midnight</strong>.</p>
+              </div>
+
+              <div class="rule-box premium-rule">
+                <div class="rule-badge">🌟 Premium 4-Hour Delivery</div>
+                <h4 class="rule-title">Premium & Designer Cakes</h4>
+                <p class="rule-desc">Baking starts at <strong>8:00 AM</strong>. Delivered in <strong>4 hours</strong>. Deliveries start at <strong>1:00 PM</strong> and run till <strong>12:00 AM midnight</strong>.</p>
+              </div>
+
+              <div class="rule-box cutoff-rule">
+                <div class="rule-badge">🕒 Order Cutoffs & Next-Day Slots</div>
+                <ul class="rule-list">
+                  <li><strong>Same-Day Cutoff:</strong> Last order at <strong>8:00 PM</strong> so your cake is freshly baked and delivered by 12:00 AM midnight.</li>
+                  <li><strong>Late Evening Orders (After 9:00 PM):</strong> Automatically booked for <strong>next-day 1:00 PM delivery</strong>.</li>
+                  <li><strong>Advance Bookings:</strong> You can pre-order for any upcoming date and preferred time slot.</li>
+                </ul>
+              </div>
+
               <div class="menu-card-floating-action">
                 <button id="switch-to-picker-btn" class="order-from-card-btn">
-                  <span>Tap to Pick Dishes from Digital Menu ➔</span>
+                  <span>Browse Cakes & Place Order ➔</span>
                 </button>
               </div>
             </div>
@@ -560,31 +575,35 @@ class MenuManager {
 
             <!-- Delivery Slot Selector -->
             <div class="form-group">
-              <label class="form-label">Preferred Delivery Slot</label>
+              <label class="form-label">Preferred Cake Delivery Slot</label>
               <div class="slot-chips-group" id="meal-slot-group">
-                <button type="button" class="slot-chip is-selected" data-slot="Lunch (12:30 PM - 2:30 PM)">
-                  <span class="slot-icon">☀️</span>
-                  <span>Lunch (12:30 - 2:30 PM)</span>
-                </button>
-                <button type="button" class="slot-chip" data-slot="Dinner (7:30 PM - 9:30 PM)">
-                  <span class="slot-icon">🌙</span>
-                  <span>Dinner (7:30 - 9:30 PM)</span>
-                </button>
-                <button type="button" class="slot-chip" data-slot="Deliver ASAP">
+                <button type="button" class="slot-chip is-selected" data-slot="Normal Cake (1-2 Hours Express Delivery • Till 12 AM)">
                   <span class="slot-icon">⚡</span>
-                  <span>Deliver ASAP</span>
+                  <span>Normal Cake (1–2 Hr Express • Till 12 AM)</span>
+                </button>
+                <button type="button" class="slot-chip" data-slot="Premium Cake 4-Hour Slot (1:00 PM - 12:00 AM • Order by 8 PM)">
+                  <span class="slot-icon">🌟</span>
+                  <span>Premium Cake (4 Hr Slot • 1 PM – 12 AM)</span>
+                </button>
+                <button type="button" class="slot-chip" data-slot="Next-Day 1:00 PM Afternoon Slot (Orders after 9 PM / Pre-order)">
+                  <span class="slot-icon">📅</span>
+                  <span>Next-Day 1:00 PM Slot (After 9 PM / Pre-order)</span>
+                </button>
+                <button type="button" class="slot-chip" data-slot="Custom Pre-Order / Future Date">
+                  <span class="slot-icon">🎂</span>
+                  <span>Custom Pre-Order / Future Date</span>
                 </button>
               </div>
             </div>
 
-            <!-- Cooking & Delivery Notes -->
+            <!-- Cake Customization Notes -->
             <div class="form-group">
-              <label for="cust-notes" class="form-label">Cooking / Special Instructions (Optional)</label>
+              <label for="cust-notes" class="form-label">Message on Cake / Customization (Optional)</label>
               <input 
                 type="text" 
                 id="cust-notes" 
                 class="form-input" 
-                placeholder="e.g. Less spicy, extra salad, call when near gate" 
+                placeholder="e.g. Message: Happy Birthday Priya! • Less sweet • Add candles" 
               />
             </div>
 
@@ -1008,7 +1027,7 @@ class MenuManager {
 
     // Compile WhatsApp Message Text
     const whatsappMessage = 
-`🍱 *NEW ORDER — Riya's Kitchen*
+`🎂 *NEW CAKE ORDER — Riya's Kitchen | Cakes*
 *Order Reference:* #${orderRef}
 ━━━━━━━━━━━━━━━━━━━━
 👤 *Customer:* ${name}
@@ -1016,16 +1035,16 @@ class MenuManager {
 📍 *Delivery Address:*
 ${address}
 
-🕒 *Preferred Timing:* ${this.selectedMealSlot}
-${notes ? `📝 *Special Notes:* ${notes}\n` : ''}━━━━━━━━━━━━━━━━━━━━
-📋 *ORDER DETAILS:*
+🕒 *Delivery Slot:* ${this.selectedMealSlot}
+${notes ? `✨ *Message on Cake / Notes:* ${notes}\n` : ''}━━━━━━━━━━━━━━━━━━━━
+📋 *CAKE SELECTION:*
 ${itemsFormatted}
 ━━━━━━━━━━━━━━━━━━━━
-💰 *Items Subtotal:* ₹${totalPrice}
-🚚 *Delivery:* Please confirm fee for address
+💰 *Subtotal:* ₹${totalPrice}
+🚚 *Delivery:* To be confirmed based on location
 💳 *Payment Preference:* ${paymentLabel}
 ━━━━━━━━━━━━━━━━━━━━
-_Order submitted via Riya's Kitchen Digital Menu_`;
+_Order submitted via Riya's Kitchen | Cakes_`;
 
     this.lastOrderSummaryText = whatsappMessage;
 
