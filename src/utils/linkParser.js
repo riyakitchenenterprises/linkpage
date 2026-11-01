@@ -67,6 +67,14 @@ export const ICONS = {
       <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
     </svg>`,
 
+  zomato: `
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="link-icon-svg">
+      <path d="M4 11h16a1 1 0 0 1 1 1c0 4.97-4.03 9-9 9s-9-4.03-9-9a1 1 0 0 1 1-1z"></path>
+      <path d="M6 8c1-1.5 1-2.5 0-4"></path>
+      <path d="M12 8c1-1.5 1-2.5 0-4"></path>
+      <path d="M18 8c1-1.5 1-2.5 0-4"></path>
+    </svg>`,
+
   generic: `
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="link-icon-svg">
       <circle cx="12" cy="12" r="10"></circle>
@@ -133,6 +141,12 @@ export function parseLinkItem(item) {
     } else {
       defaultSubtitle = 'riyakitchenenterprises';
     }
+  } else if (lower.includes('zomato.com')) {
+    platform = 'zomato';
+    iconName = 'zomato';
+    defaultTitle = 'Order Food on Zomato';
+    defaultSubtitle = 'Homestyle meals & daily specials • Kharadi';
+    isExternal = true;
   } else if (lower.includes('social') || lower.includes('follow')) {
     platform = 'social';
     iconName = 'social';

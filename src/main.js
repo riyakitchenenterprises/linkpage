@@ -35,8 +35,8 @@ export function renderLinks() {
       a.rel = 'noopener noreferrer';
     }
 
-    // Intercept menu click to open the Menu Window right in the window
-    if (parsed.platform === 'menu' || parsed.url.includes('menu')) {
+    // Intercept cake menu click to open the Menu Window right in the window
+    if (parsed.platform === 'menu' || parsed.url === '#digital-menu-section') {
       a.addEventListener('click', (e) => {
         e.preventDefault();
         menuManager.openMenuWindow();

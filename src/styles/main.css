@@ -396,6 +396,15 @@ body::before {
   border-color: rgba(138, 12, 13, 0.4);
 }
 
+.link-card[data-platform="zomato"] .link-icon-box {
+  background: #FFF1F2;
+  color: #E23744;
+  border: 1px solid rgba(226, 55, 68, 0.2);
+}
+.link-card[data-platform="zomato"]:hover {
+  border-color: rgba(226, 55, 68, 0.45);
+}
+
 .link-card[data-platform="menu"] .link-icon-box {
   background: #FDF4E7;
   color: var(--amber-warm);

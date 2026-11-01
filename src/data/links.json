@@ -7,6 +7,13 @@
     "platform": "menu"
   },
   {
+    "id": "food-zomato",
+    "url": "https://www.zomato.com/pune/riyas-kitchen-kharadi/order",
+    "title": "Order Food on Zomato",
+    "subtitle": "Homestyle meals & daily specials • Kharadi",
+    "platform": "zomato"
+  },
+  {
     "id": "social",
     "url": "#follow-modal",
     "title": "Follow Us on Social Media",
