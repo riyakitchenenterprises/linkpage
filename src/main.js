@@ -244,8 +244,6 @@ function setupShare() {
 document.addEventListener('DOMContentLoaded', () => {
   renderLinks();
   menuManager.init();
-  renderSpecials();
-  renderKitchenInfo();
   setupShare();
 
   if (window.location.hash === '#menu' || window.location.hash === '#digital-menu-section') {
