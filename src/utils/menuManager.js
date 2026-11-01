@@ -8,11 +8,6 @@ const STORAGE_KEY_CUSTOMER = 'rk_customer_info';
 
 // SVG Icons for the Menu & Cart
 const MENU_ICONS = {
-  veg: `
-    <span class="diet-badge diet-veg" title="100% Pure Vegetarian" aria-label="Vegetarian">
-      <span class="diet-dot"></span>
-    </span>
-  `,
   cart: `
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" class="cart-svg-icon">
       <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path>
@@ -50,16 +45,54 @@ const MENU_ICONS = {
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
       <polyline points="20 6 9 17 4 12"></polyline>
     </svg>
+  `,
+  menuBook: `
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1-2.5-2.5Z"></path>
+      <path d="M6 6h10"></path>
+      <path d="M6 10h10"></path>
+    </svg>
+  `,
+  image: `
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <rect width="18" height="18" x="3" y="3" rx="2" ry="2"></rect>
+      <circle cx="9" cy="9" r="2"></circle>
+      <path d="m21 15-3.086-3.086a2 2 0 0 0-2.828 0L6 21"></path>
+    </svg>
   `
 };
 
+function getDietaryBadge(dietary) {
+  if (dietary === 'egg') {
+    return `
+      <span class="diet-badge diet-egg" title="Contains Egg" aria-label="Egg Dish">
+        <span class="diet-dot"></span>
+      </span>
+    `;
+  }
+  if (dietary === 'non-veg') {
+    return `
+      <span class="diet-badge diet-nonveg" title="Non-Vegetarian (Chicken)" aria-label="Non-Vegetarian">
+        <span class="diet-dot"></span>
+      </span>
+    `;
+  }
+  return `
+    <span class="diet-badge diet-veg" title="100% Pure Vegetarian" aria-label="Vegetarian">
+      <span class="diet-dot"></span>
+    </span>
+  `;
+}
+
 /**
- * Menu Manager handles state, UI rendering, cart mutations, and WhatsApp messaging
+ * Menu Manager handles state, UI rendering, cart mutations, modal window, and WhatsApp messaging
  */
 class MenuManager {
   constructor() {
     this.cart = this.loadCart();
     this.activeCategory = 'all';
+    this.activeDietary = 'all'; // 'all' | 'veg' | 'egg' | 'non-veg'
+    this.activeViewMode = 'digital'; // 'digital' | 'card'
     this.searchQuery = '';
     this.selectedMealSlot = 'Lunch (12:30 PM - 2:30 PM)';
     this.selectedPaymentMode = 'pay_confirmation'; // 'pay_confirmation' | 'razorpay_link'
@@ -80,7 +113,7 @@ class MenuManager {
     try {
       localStorage.setItem(STORAGE_KEY_CART, JSON.stringify(this.cart));
     } catch {
-      // Ignore local storage error
+      // Ignore
     }
   }
 
@@ -143,7 +176,6 @@ class MenuManager {
     const newQty = Math.max(0, current + delta);
     this.setItemQuantity(id, newQty);
     
-    // Haptic feedback if available
     if (window.navigator?.vibrate) {
       window.navigator.vibrate(12);
     }
@@ -156,94 +188,200 @@ class MenuManager {
   }
 
   /**
-   * Initialize the digital menu system in the DOM
+   * Initialize digital menu & modal window
    */
   init() {
-    this.renderMenuSection();
+    this.injectMenuWindowModal();
     this.injectCartUI();
     this.updateUI();
     this.setupEventListeners();
   }
 
-  renderMenuSection() {
-    const container = document.getElementById('digital-menu-container');
-    if (!container) return;
+  /**
+   * Open the dedicated Menu Window Modal
+   */
+  openMenuWindow(initialMode = 'digital') {
+    this.closeDrawer();
+    this.activeViewMode = initialMode;
+    const modal = document.getElementById('menu-window-modal');
+    const backdrop = document.getElementById('menu-window-backdrop');
+    if (modal && backdrop) {
+      this.syncViewModeTabs();
+      backdrop.classList.add('is-active');
+      modal.classList.add('is-open');
+      document.body.style.overflow = 'hidden';
+      
+      // Render content
+      this.renderItemsList();
+    }
+  }
 
-    container.innerHTML = `
-      <section class="section-card menu-interactive-card" id="digital-menu-section">
-        <!-- Section Header -->
-        <div class="section-header">
-          <div class="section-badge">
-            <span class="live-dot"></span>
-            <span>Digital Ordering Menu</span>
+  closeMenuWindow() {
+    const modal = document.getElementById('menu-window-modal');
+    const backdrop = document.getElementById('menu-window-backdrop');
+    if (modal && backdrop) {
+      modal.classList.remove('is-open');
+      backdrop.classList.remove('is-active');
+      document.body.style.overflow = '';
+    }
+  }
+
+  syncViewModeTabs() {
+    const digitalTab = document.getElementById('tab-mode-digital');
+    const cardTab = document.getElementById('tab-mode-card');
+    const digitalView = document.getElementById('menu-view-digital');
+    const cardView = document.getElementById('menu-view-card');
+
+    if (this.activeViewMode === 'digital') {
+      digitalTab?.classList.add('is-active');
+      cardTab?.classList.remove('is-active');
+      if (digitalView) digitalView.style.display = 'block';
+      if (cardView) cardView.style.display = 'none';
+    } else {
+      cardTab?.classList.add('is-active');
+      digitalTab?.classList.remove('is-active');
+      if (cardView) cardView.style.display = 'block';
+      if (digitalView) digitalView.style.display = 'none';
+    }
+  }
+
+  /**
+   * Inject Full Menu Window Modal into the DOM
+   */
+  injectMenuWindowModal() {
+    if (document.getElementById('menu-window-modal')) return;
+
+    const modalHtml = `
+      <div id="menu-window-backdrop" class="menu-window-backdrop" aria-hidden="true"></div>
+
+      <div id="menu-window-modal" class="menu-window-modal" role="dialog" aria-modal="true" aria-labelledby="menu-win-title">
+        <!-- Top App Bar -->
+        <header class="menu-win-header">
+          <div class="menu-win-title-wrap">
+            <h2 id="menu-win-title" class="menu-win-title">Riya’s Kitchen Menu</h2>
+            <span class="menu-win-tagline">Homemade Food | Made with Love</span>
           </div>
-          <h2 class="section-heading">Explore Our Homestyle Menu</h2>
-          <p class="menu-intro-text">
-            Authentic, comforting meals prepared fresh every day. Choose your favorites and place your order directly via WhatsApp!
-          </p>
-        </div>
+          <button id="close-menu-win-btn" class="menu-win-close-btn" aria-label="Close menu window">
+            ${MENU_ICONS.close}
+          </button>
+        </header>
 
-        <!-- Search Bar -->
-        <div class="menu-search-wrapper">
-          <span class="search-icon-slot" aria-hidden="true">${MENU_ICONS.search}</span>
-          <input 
-            type="search" 
-            id="menu-search-input" 
-            class="menu-search-input" 
-            placeholder="Search thalis, curries, phulkas, sweets..." 
-            autocomplete="off"
-            aria-label="Search menu items"
-          />
-          <button id="menu-search-clear" class="search-clear-btn" style="display: none;" aria-label="Clear search">
-            ✕
+        <!-- View Mode Switcher: Digital Menu vs Original Menu Card -->
+        <div class="menu-mode-switcher" role="tablist">
+          <button id="tab-mode-digital" class="mode-tab-btn is-active" data-mode="digital">
+            <span class="tab-icon">${MENU_ICONS.menuBook}</span>
+            <span>Digital Order Menu</span>
+          </button>
+          <button id="tab-mode-card" class="mode-tab-btn" data-mode="card">
+            <span class="tab-icon">${MENU_ICONS.image}</span>
+            <span>Original Menu Card</span>
           </button>
         </div>
 
-        <!-- Category Filter Tabs -->
-        <div class="category-tabs-container" role="tablist" aria-label="Menu Categories">
-          ${menuData.categories.map(cat => `
-            <button 
-              class="cat-tab ${cat.id === this.activeCategory ? 'is-active' : ''}" 
-              data-cat-id="${cat.id}"
-              role="tab"
-              aria-selected="${cat.id === this.activeCategory}"
-            >
-              <span>${cat.name}</span>
-            </button>
-          `).join('')}
-        </div>
+        <!-- Scrollable Menu Content Area -->
+        <div class="menu-win-body">
+          
+          <!-- TAB 1: Digital Interactive Menu -->
+          <div id="menu-view-digital" class="menu-view-content">
+            <!-- Search Bar -->
+            <div class="menu-search-wrapper">
+              <span class="search-icon-slot" aria-hidden="true">${MENU_ICONS.search}</span>
+              <input 
+                type="search" 
+                id="menu-search-input" 
+                class="menu-search-input" 
+                placeholder="Search roti, paneer, chicken, momos, combos..." 
+                autocomplete="off"
+                aria-label="Search menu items"
+              />
+              <button id="menu-search-clear" class="search-clear-btn" style="display: none;" aria-label="Clear search">
+                ✕
+              </button>
+            </div>
 
-        <!-- Items Grid -->
-        <div class="menu-items-grid" id="menu-items-grid">
-          <!-- Dynamically populated in renderItemsList() -->
+            <!-- Dietary Filter Chips (Veg / Egg / Non-Veg) -->
+            <div class="dietary-filter-bar" role="group" aria-label="Filter by dietary preference">
+              <button class="diet-chip is-active" data-diet="all">All Dishes (${menuData.items.length})</button>
+              <button class="diet-chip" data-diet="veg">
+                <span class="chip-dot veg-dot"></span>
+                <span>Pure Veg</span>
+              </button>
+              <button class="diet-chip" data-diet="egg">
+                <span class="chip-dot egg-dot"></span>
+                <span>Egg</span>
+              </button>
+              <button class="diet-chip" data-diet="non-veg">
+                <span class="chip-dot nonveg-dot"></span>
+                <span>Chicken</span>
+              </button>
+            </div>
+
+            <!-- Category Filter Tabs -->
+            <div class="category-tabs-container" role="tablist" aria-label="Menu Categories">
+              ${menuData.categories.map(cat => `
+                <button 
+                  class="cat-tab ${cat.id === this.activeCategory ? 'is-active' : ''}" 
+                  data-cat-id="${cat.id}"
+                  role="tab"
+                  aria-selected="${cat.id === this.activeCategory}"
+                >
+                  <span>${cat.name}</span>
+                </button>
+              `).join('')}
+            </div>
+
+            <!-- Items List -->
+            <div class="menu-items-grid" id="modal-menu-items-grid">
+              <!-- Rendered dynamically -->
+            </div>
+          </div>
+
+          <!-- TAB 2: Original Menu Card View -->
+          <div id="menu-view-card" class="menu-view-content" style="display: none;">
+            <div class="menu-card-preview-wrapper">
+              <img 
+                src="/riya-kitchen-menu-card.jpg" 
+                alt="Official Riya's Kitchen Menu Card" 
+                class="menu-card-full-img" 
+                loading="eager"
+              />
+              <div class="menu-card-floating-action">
+                <button id="switch-to-picker-btn" class="order-from-card-btn">
+                  <span>Tap to Pick Dishes from Digital Menu ➔</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
         </div>
-      </section>
+      </div>
     `;
 
-    this.renderItemsList();
+    document.body.insertAdjacentHTML('beforeend', modalHtml);
   }
 
   renderItemsList() {
-    const grid = document.getElementById('menu-items-grid');
+    const grid = document.getElementById('modal-menu-items-grid');
     if (!grid) return;
 
     const query = this.searchQuery.trim().toLowerCase();
     
-    // Filter items
+    // Filter items by category, dietary, and search query
     const filtered = menuData.items.filter(item => {
       const matchesCat = this.activeCategory === 'all' || item.category === this.activeCategory;
+      const matchesDiet = this.activeDietary === 'all' || item.dietary === this.activeDietary;
       const matchesQuery = !query || 
         item.name.toLowerCase().includes(query) || 
         (item.description && item.description.toLowerCase().includes(query));
-      return matchesCat && matchesQuery;
+      return matchesCat && matchesDiet && matchesQuery;
     });
 
     if (filtered.length === 0) {
       grid.innerHTML = `
         <div class="menu-empty-state">
           <div class="empty-icon">🍲</div>
-          <h4>No items found</h4>
-          <p>No dishes match "${escapeHTML(query)}". Try clearing your search or browsing another category.</p>
+          <h4>No matching dishes found</h4>
+          <p>Try resetting filters or searching for another dish.</p>
           <button id="reset-filter-btn" class="empty-reset-btn">View All Dishes</button>
         </div>
       `;
@@ -251,10 +389,14 @@ class MenuManager {
       if (resetBtn) {
         resetBtn.addEventListener('click', () => {
           this.activeCategory = 'all';
+          this.activeDietary = 'all';
           this.searchQuery = '';
           const searchInput = document.getElementById('menu-search-input');
           if (searchInput) searchInput.value = '';
-          this.renderMenuSection();
+          
+          document.querySelectorAll('.cat-tab').forEach(t => t.classList.toggle('is-active', t.getAttribute('data-cat-id') === 'all'));
+          document.querySelectorAll('.diet-chip').forEach(c => c.classList.toggle('is-active', c.getAttribute('data-diet') === 'all'));
+          this.renderItemsList();
         });
       }
       return;
@@ -262,14 +404,14 @@ class MenuManager {
 
     grid.innerHTML = filtered.map(item => {
       const qty = this.getCartCount(item.id);
-      const hasImage = !!item.image;
+      const dietaryBadgeHtml = getDietaryBadge(item.dietary);
 
       return `
         <article class="dish-card ${qty > 0 ? 'in-cart' : ''}" data-item-id="${item.id}">
           <div class="dish-main-row">
             <div class="dish-details">
               <div class="dish-meta">
-                ${MENU_ICONS.veg}
+                ${dietaryBadgeHtml}
                 ${item.badge ? `<span class="dish-badge">${escapeHTML(item.badge)}</span>` : ''}
               </div>
               <h3 class="dish-name">${escapeHTML(item.name)}</h3>
@@ -278,12 +420,6 @@ class MenuManager {
             </div>
 
             <div class="dish-action-col">
-              ${hasImage ? `
-                <div class="dish-thumb-box">
-                  <img src="${item.image}" alt="${escapeHTML(item.name)}" class="dish-thumb-img" loading="lazy" />
-                </div>
-              ` : ''}
-              
               <div class="dish-stepper-wrapper">
                 ${qty === 0 ? `
                   <button class="add-to-cart-btn" data-action="add" data-item-id="${item.id}">
@@ -604,12 +740,12 @@ class MenuManager {
       }
     }
 
-    // 3. Re-render menu item cards to reflect updated counts
+    // 3. Re-render items in modal
     this.renderItemsList();
   }
 
   setupEventListeners() {
-    // 1. Menu Grid Delegated Click Listener (Add / Plus / Minus buttons)
+    // 1. Menu Grid Delegated Click Listener
     document.addEventListener('click', (e) => {
       const btn = e.target.closest('[data-action]');
       if (!btn) return;
@@ -625,7 +761,50 @@ class MenuManager {
       }
     });
 
-    // 2. Category Tab Clicks
+    // 2. View Mode Tabs (Digital Menu vs Original Menu Card)
+    const digitalTab = document.getElementById('tab-mode-digital');
+    const cardTab = document.getElementById('tab-mode-card');
+    const switchToPicker = document.getElementById('switch-to-picker-btn');
+
+    if (digitalTab) {
+      digitalTab.addEventListener('click', () => {
+        this.activeViewMode = 'digital';
+        this.syncViewModeTabs();
+      });
+    }
+
+    if (cardTab) {
+      cardTab.addEventListener('click', () => {
+        this.activeViewMode = 'card';
+        this.syncViewModeTabs();
+      });
+    }
+
+    if (switchToPicker) {
+      switchToPicker.addEventListener('click', () => {
+        this.activeViewMode = 'digital';
+        this.syncViewModeTabs();
+      });
+    }
+
+    // 3. Dietary Filter Chips
+    const dietFilterBar = document.querySelector('.dietary-filter-bar');
+    if (dietFilterBar) {
+      dietFilterBar.addEventListener('click', (e) => {
+        const chip = e.target.closest('.diet-chip');
+        if (!chip) return;
+
+        const diet = chip.getAttribute('data-diet');
+        if (diet) {
+          this.activeDietary = diet;
+          dietFilterBar.querySelectorAll('.diet-chip').forEach(c => c.classList.remove('is-active'));
+          chip.classList.add('is-active');
+          this.renderItemsList();
+        }
+      });
+    }
+
+    // 4. Category Tab Clicks
     const catContainer = document.querySelector('.category-tabs-container');
     if (catContainer) {
       catContainer.addEventListener('click', (e) => {
@@ -646,7 +825,7 @@ class MenuManager {
       });
     }
 
-    // 3. Search Input
+    // 5. Search Input
     const searchInput = document.getElementById('menu-search-input');
     const searchClear = document.getElementById('menu-search-clear');
     if (searchInput) {
@@ -671,7 +850,17 @@ class MenuManager {
       });
     }
 
-    // 4. Open / Close Checkout Drawer
+    // 6. Close Menu Window Modal
+    const closeWinBtn = document.getElementById('close-menu-win-btn');
+    const winBackdrop = document.getElementById('menu-window-backdrop');
+    if (closeWinBtn) {
+      closeWinBtn.addEventListener('click', () => this.closeMenuWindow());
+    }
+    if (winBackdrop) {
+      winBackdrop.addEventListener('click', () => this.closeMenuWindow());
+    }
+
+    // 7. Open / Close Checkout Drawer
     const openCartBtn = document.getElementById('open-cart-btn');
     const closeDrawerBtn = document.getElementById('close-drawer-btn');
     const backdrop = document.getElementById('checkout-backdrop');
@@ -688,7 +877,7 @@ class MenuManager {
       backdrop.addEventListener('click', () => this.closeDrawer());
     }
 
-    // 5. Meal Slot Chips Selection
+    // 8. Meal Slot Chips Selection
     const slotGroup = document.getElementById('meal-slot-group');
     if (slotGroup) {
       slotGroup.addEventListener('click', (e) => {
@@ -701,7 +890,7 @@ class MenuManager {
       });
     }
 
-    // 6. Payment Mode Radio Change
+    // 9. Payment Mode Radio Change
     const paymentRadios = document.querySelectorAll('input[name="payment_mode"]');
     paymentRadios.forEach(radio => {
       radio.addEventListener('change', (e) => {
@@ -709,13 +898,13 @@ class MenuManager {
       });
     });
 
-    // 7. WhatsApp Order Submission
+    // 10. WhatsApp Order Submission
     const submitBtn = document.getElementById('place-order-whatsapp-btn');
     if (submitBtn) {
       submitBtn.addEventListener('click', () => this.handleOrderSubmission());
     }
 
-    // 8. Order Success Modal actions
+    // 11. Order Success Modal actions
     const successClose = document.getElementById('success-done-btn');
     const successCopy = document.getElementById('success-copy-order-btn');
     const successBackdrop = document.getElementById('order-success-backdrop');
@@ -746,7 +935,6 @@ class MenuManager {
     if (drawer && backdrop) {
       backdrop.classList.add('is-active');
       drawer.classList.add('is-open');
-      document.body.style.overflow = 'hidden'; // Prevent background scrolling
     }
   }
 
@@ -756,7 +944,6 @@ class MenuManager {
     if (drawer && backdrop) {
       drawer.classList.remove('is-open');
       backdrop.classList.remove('is-active');
-      document.body.style.overflow = '';
     }
   }
 
@@ -842,8 +1029,6 @@ _Order submitted via Riya's Kitchen Digital Menu_`;
 
     this.lastOrderSummaryText = whatsappMessage;
 
-    // Determine target WhatsApp phone:
-    // If configured in kitchenInfoData, use it; otherwise use general wa.me
     const kitchenPhone = (kitchenInfoData.whatsappPhone || '').replace(/\D/g, '');
     let waUrl = '';
 

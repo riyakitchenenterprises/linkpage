@@ -33,8 +33,14 @@ export function renderLinks() {
       a.rel = 'noopener noreferrer';
     }
 
-    // Smooth scroll for internal hashes
-    if (parsed.url.startsWith('#')) {
+    // Intercept menu click to open the Menu Window right in the window
+    if (parsed.platform === 'menu' || parsed.url.includes('menu')) {
+      a.addEventListener('click', (e) => {
+        e.preventDefault();
+        menuManager.openMenuWindow();
+      });
+    } else if (parsed.url.startsWith('#')) {
+      // Smooth scroll for internal hashes
       a.addEventListener('click', (e) => {
         const targetId = parsed.url.substring(1);
         const targetEl = document.getElementById(targetId);
@@ -241,4 +247,8 @@ document.addEventListener('DOMContentLoaded', () => {
   renderSpecials();
   renderKitchenInfo();
   setupShare();
+
+  if (window.location.hash === '#menu' || window.location.hash === '#digital-menu-section') {
+    menuManager.openMenuWindow();
+  }
 });
