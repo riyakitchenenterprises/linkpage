@@ -82,6 +82,46 @@
         <p class="brand-supporting">Express 1–2 hr delivery • Premium cakes in 4 hrs or next day.</p>
       </header>
 
+      <!-- Delivery Radius / Area Checker Card -->
+      <section class="delivery-checker-card" id="delivery-checker-section" aria-label="Check Delivery Area">
+        <div class="checker-header-row">
+          <div class="checker-icon-pill" aria-hidden="true">📍</div>
+          <div class="checker-titles">
+            <h2 class="checker-main-title">Check Delivery in Your Area</h2>
+            <p class="checker-subtitle">We deliver fresh cakes up to <strong>15 km from Zensar Kharadi</strong>, Pune</p>
+          </div>
+        </div>
+
+        <form id="area-check-form" class="checker-form" onsubmit="return false;">
+          <div class="checker-input-group">
+            <input 
+              type="text" 
+              id="area-query-input" 
+              class="checker-input" 
+              placeholder="Enter area or Pincode (e.g. Viman Nagar, 411014)..." 
+              autocomplete="off"
+            />
+            <button type="submit" id="check-area-submit-btn" class="checker-submit-btn">
+              <span>Check</span>
+            </button>
+          </div>
+
+          <div class="checker-quick-actions">
+            <button type="button" id="use-my-gps-btn" class="gps-quick-btn">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" class="gps-icon">
+                <circle cx="12" cy="12" r="10"></circle>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+              <span>Use Live GPS Location</span>
+            </button>
+            <span class="checker-popular-hints">Kharadi • Viman Nagar • Hadapsar • Wagholi • KP</span>
+          </div>
+
+          <!-- Dynamic Result Display Box -->
+          <div id="checker-result-box" class="checker-result-box" style="display: none;"></div>
+        </form>
+      </section>
+
       <!-- Ordered Action Buttons -->
       <section class="links-list" id="links-list" aria-label="Official Links">
         <!-- Rendered dynamically from src/data/links.json with fallback -->

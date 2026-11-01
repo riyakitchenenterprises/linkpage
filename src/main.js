@@ -3,6 +3,7 @@ import specialsData from './data/specials.json';
 import kitchenInfoData from './data/kitchenInfo.json';
 import { parseLinkItem, ICONS } from './utils/linkParser.js';
 import { menuManager } from './utils/menuManager.js';
+import { checkServiceability, checkGPSLocation } from './utils/deliveryChecker.js';
 
 const ARROW_SVG = `
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
@@ -240,10 +241,106 @@ function setupShare() {
   }
 }
 
+/**
+ * Setup 15 km Delivery Area Checker from Zensar Kharadi
+ */
+function setupDeliveryChecker() {
+  const form = document.getElementById('area-check-form');
+  const input = document.getElementById('area-query-input');
+  const gpsBtn = document.getElementById('use-my-gps-btn');
+  const resultBox = document.getElementById('checker-result-box');
+
+  if (!form || !input || !resultBox) return;
+
+  function renderLoading(msg = "Checking distance from Zensar Kharadi...") {
+    resultBox.style.display = 'block';
+    resultBox.className = 'checker-result-box result-loading';
+    resultBox.innerHTML = `<span>⏳ ${escapeHTML(msg)}</span>`;
+  }
+
+  function renderResult(res) {
+    resultBox.style.display = 'block';
+
+    if (!res.success) {
+      resultBox.className = 'checker-result-box result-warning';
+      resultBox.innerHTML = `
+        <div class="result-badge-row">
+          <span class="status-icon">ℹ️</span>
+          <strong>Notice</strong>
+        </div>
+        <p class="result-distance">${escapeHTML(res.message)}</p>
+      `;
+      return;
+    }
+
+    if (res.inZone) {
+      resultBox.className = 'checker-result-box result-success';
+      resultBox.innerHTML = `
+        <div class="result-badge-row">
+          <span class="status-icon">🎉</span>
+          <strong>Delivery Available in ${escapeHTML(res.areaName)}!</strong>
+        </div>
+        <p class="result-distance">
+          Approx <strong>${res.distanceKm} km</strong> from our kitchen at Zensar Kharadi (within our 15 km delivery radius).
+        </p>
+        <div class="result-perks">
+          <span>⚡ Normal Cakes: 1–2 Hr Express</span> • <span>🌟 Premium Cakes: 4 Hr Slot</span>
+        </div>
+        <button type="button" id="open-cake-menu-from-checker" class="result-order-btn">
+          Browse Cake Menu & Order ➔
+        </button>
+      `;
+
+      const orderBtn = resultBox.querySelector('#open-cake-menu-from-checker');
+      if (orderBtn) {
+        orderBtn.addEventListener('click', () => {
+          menuManager.openMenuWindow();
+        });
+      }
+    } else {
+      resultBox.className = 'checker-result-box result-warning';
+      resultBox.innerHTML = `
+        <div class="result-badge-row">
+          <span class="status-icon">⚠️</span>
+          <strong>${escapeHTML(res.areaName)} is outside our standard 15 km radius</strong>
+        </div>
+        <p class="result-distance">
+          Calculated distance: <strong>${res.distanceKm} km</strong> from Zensar Kharadi. Standard delivery is up to 15 km.
+        </p>
+        <p class="result-whatsapp-hint">
+          Ordering for a large party or special celebration? Contact us directly on WhatsApp to check if custom long-distance delivery is possible!
+        </p>
+      `;
+    }
+  }
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const query = input.value.trim();
+    if (!query) {
+      renderResult({ success: false, message: "Please enter your Pune area or pincode." });
+      input.focus();
+      return;
+    }
+    renderLoading(`Checking distance for "${query}"...`);
+    const res = await checkServiceability(query);
+    renderResult(res);
+  });
+
+  if (gpsBtn) {
+    gpsBtn.addEventListener('click', async () => {
+      renderLoading("Locating your device via GPS...");
+      const res = await checkGPSLocation();
+      renderResult(res);
+    });
+  }
+}
+
 // Initialize on DOM Ready
 document.addEventListener('DOMContentLoaded', () => {
   renderLinks();
   menuManager.init();
+  setupDeliveryChecker();
   setupShare();
 
   if (window.location.hash === '#menu' || window.location.hash === '#digital-menu-section') {

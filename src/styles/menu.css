@@ -1353,3 +1353,244 @@
   font-size: 0.82rem;
   cursor: pointer;
 }
+
+/* ==========================================================================
+   Delivery Zone Checker Card (15 km Radius from Zensar Kharadi)
+   ========================================================================== */
+.delivery-checker-card {
+  margin: 1.25rem 0 1.25rem;
+  padding: 1.25rem;
+  background: #FFFFFF;
+  border: 1.5px solid var(--card-border, #EFE4D6);
+  border-radius: var(--radius-card, 24px);
+  box-shadow: 0 6px 22px rgba(138, 12, 13, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.delivery-checker-card:hover {
+  box-shadow: 0 10px 28px rgba(138, 12, 13, 0.08);
+}
+
+.checker-header-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.95rem;
+}
+
+.checker-icon-pill {
+  width: 42px;
+  height: 42px;
+  border-radius: 14px;
+  background: var(--amber-soft, #FCF4EB);
+  border: 1px solid rgba(200, 109, 47, 0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.35rem;
+  flex-shrink: 0;
+}
+
+.checker-titles {
+  display: flex;
+  flex-direction: column;
+}
+
+.checker-main-title {
+  font-family: var(--font-display, serif);
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-main, #231815);
+  line-height: 1.25;
+}
+
+.checker-subtitle {
+  font-size: 0.8rem;
+  color: var(--text-muted, #6B5E59);
+  line-height: 1.35;
+  margin-top: 0.15rem;
+}
+
+.checker-subtitle strong {
+  color: var(--terracotta-primary, #8A0C0D);
+}
+
+.checker-input-group {
+  display: flex;
+  gap: 0.45rem;
+  margin-bottom: 0.65rem;
+}
+
+.checker-input {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  background: var(--bg-cream-warm, #FFF9F2);
+  border: 1.5px solid var(--card-border, #EFE4D6);
+  border-radius: var(--radius-pill, 9999px);
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  color: var(--text-main, #231815);
+  outline: none;
+  transition: all 0.2s ease;
+}
+
+.checker-input:focus {
+  background: #FFFFFF;
+  border-color: var(--terracotta-primary, #8A0C0D);
+  box-shadow: 0 0 0 3px rgba(138, 12, 13, 0.08);
+}
+
+.checker-submit-btn {
+  background: var(--terracotta-primary, #8A0C0D);
+  color: #FFFFFF;
+  border: none;
+  padding: 0 1.25rem;
+  border-radius: var(--radius-pill, 9999px);
+  font-family: var(--font-sans);
+  font-size: 0.86rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 12px rgba(138, 12, 13, 0.22);
+}
+
+.checker-submit-btn:hover {
+  background: var(--terracotta-hover, #A11314);
+  transform: translateY(-1px);
+}
+
+.checker-submit-btn:active {
+  transform: scale(0.96);
+}
+
+.checker-quick-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.gps-quick-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  background: transparent;
+  border: none;
+  color: var(--whatsapp-green, #1F7D4E);
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0.2rem 0;
+  align-self: flex-start;
+  transition: opacity 0.15s ease;
+}
+
+.gps-quick-btn:hover {
+  opacity: 0.8;
+}
+
+.gps-icon {
+  width: 15px;
+  height: 15px;
+}
+
+.checker-popular-hints {
+  font-size: 0.73rem;
+  color: var(--text-light, #948682);
+  line-height: 1.3;
+}
+
+/* Results Display Box */
+.checker-result-box {
+  margin-top: 0.85rem;
+  border-radius: 16px;
+  padding: 0.95rem 1rem;
+  animation: resultSlideDown 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes resultSlideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.result-loading {
+  background: var(--bg-cream-warm, #FFF9F2);
+  border: 1.5px dashed var(--card-border, #EFE4D6);
+  color: var(--text-muted, #6B5E59);
+  font-size: 0.84rem;
+  text-align: center;
+  padding: 1rem;
+}
+
+.result-success {
+  background: #F4FAF6;
+  border: 1.5px solid #C6E7D5;
+}
+
+.result-badge-row {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  font-size: 0.92rem;
+  font-weight: 700;
+  color: #1A633D;
+  margin-bottom: 0.35rem;
+}
+
+.result-distance {
+  font-size: 0.82rem;
+  color: var(--text-muted, #6B5E59);
+  line-height: 1.4;
+  margin-bottom: 0.5rem;
+}
+
+.result-perks {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  font-size: 0.74rem;
+  font-weight: 600;
+  color: #1F7D4E;
+  margin-bottom: 0.75rem;
+}
+
+.result-order-btn {
+  width: 100%;
+  background: var(--whatsapp-green, #1F7D4E);
+  color: #FFFFFF;
+  border: none;
+  padding: 0.65rem 1rem;
+  border-radius: 12px;
+  font-family: var(--font-sans);
+  font-size: 0.86rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.18s ease;
+}
+
+.result-order-btn:hover {
+  background: var(--whatsapp-green-hover, #196C42);
+}
+
+.result-warning {
+  background: #FFFBF5;
+  border: 1.5px solid #F3DFB8;
+}
+
+.result-warning .result-badge-row {
+  color: #9C5708;
+}
+
+.result-whatsapp-hint {
+  font-size: 0.78rem;
+  color: var(--text-muted, #6B5E59);
+  margin-top: 0.4rem;
+  line-height: 1.35;
+}
+
